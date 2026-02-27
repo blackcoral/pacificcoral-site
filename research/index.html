@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Research | Pacific Coral Research Services</title>
+  <meta name="description" content="Research and publications supporting coral reef science and management across the Pacific Islands." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script src="/assets/js/site.js" defer></script>
+  <style>
+    /* Page-only small additions */
+    .filterbar {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem 1rem;
+      align-items:center;
+      margin-top: 1rem;
+    }
+    .filterbar input, .filterbar select {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(3,9,18,.78);
+      color: var(--text);
+      padding: .55rem .9rem;
+      font-size: .9rem;
+      outline: none;
+      min-width: 220px;
+    }
+    .filterbar select { min-width: 160px; }
+    .filter-note {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-top: .55rem;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(3,10,18,.92);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(18px);
+      padding: .55rem .9rem;
+      border-radius: 999px;
+      box-shadow: 0 18px 56px rgba(0,0,0,.72);
+      color: var(--text);
+      font-size: .88rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="/assets/img/logo.JPG" alt="Pacific Coral Research Services logo" />
+        <div>
+          <div class="title">Pacific Coral Research Services</div>
+          <div class="sub">Science-based coral reef consulting across the Pacific</div>
+        </div>
+      </div>
+
+      <button class="menu-btn" type="button" aria-label="Toggle navigation">Menu</button>
+
+      <nav class="nav collapsed" aria-label="Primary">
+        <a href="/" data-path="/">Home</a>
+        <a href="/services/" data-path="/services">Services</a>
+        <a href="/about/" data-path="/about">About</a>
+        <a href="/map/" data-path="/map">Map</a>
+        <a href="/research/" data-path="/research">Research</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel hero">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker">Research · Publications · Profiles</div>
+          <h1>Publications</h1>
+          <p class="lead">
+            Peer-reviewed publications and book chapters (links preserved). Use the filters below to quickly find a paper.
+          </p>
+
+          <div class="filterbar" aria-label="Publication filters">
+            <input id="pubSearch" type="search" placeholder="Search title, authors, journal…" autocomplete="off" />
+            <select id="pubYear">
+              <option value="">All years</option>
+              <option value="2025">2025</option><option value="2024">2024</option><option value="2021">2021</option><option value="2019">2019</option><option value="2016">2016</option><option value="2015">2015</option><option value="2012">2012</option><option value="2010">2010</option><option value="2007">2007</option><option value="2006">2006</option><option value="2002">2002</option><option value="2001">2001</option><option value="1996">1996</option>
+            </select>
+            <button id="pubClear" class="btn outline" type="button">Clear</button>
+            <a class="btn outline" href="https://scholar.google.com/citations?user=L6Ot0i4AAAAJ&hl=en&oi=sra" target="_blank" rel="noopener">Google Scholar Profile</a>
+          </div>
+          <div class="filter-note">Tip: Use “Copy citation” to paste into emails, reports, or proposals.</div>
+
+          <div class="actions" style="margin-top:1rem;">
+            <a class="btn outline" href="https://orcid.org/0000-0002-3430-3451" target="_blank" rel="noopener">ORCID</a>
+<a class="btn outline" href="https://www.webofscience.com/wos/author/record/AAK-8138-2020" target="_blank" rel="noopener">Web of Science</a>
+<a class="btn outline" href="http://www.mesophotic.org/members/120" target="_blank" rel="noopener">Mesophotic.org</a>
+<a class="btn outline" href="https://www.researchgate.net/profile/Anthony-Montgomery" target="_blank" rel="noopener">ResearchGate</a>
+<a class="btn outline" href="https://loop.frontiersin.org/people/1983930/overview" target="_blank" rel="noopener">Frontiers Loop</a>
+<a class="btn outline" href="https://sciprofiles.com/profile/AnthonyDMontgomery" target="_blank" rel="noopener">SciProfiles</a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="hero-img">
+            <img src="/assets/img/coral_tiled.png" alt="Coral habitat mosaic" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="panel section year-section" data-year="2025">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2025</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2025" data-text="wishgrad%2C%20v.%2C%20l.e.k.%20shizuru%2C%20k.%20takata%2C%20a.d.%20montgomery%2C%20d.%20wagner%2C%20%26%20r.j.%20toonen.%202025.%20hawaiian%20black%20coral%20%28antipatharia%29%20complete%20mitochondrial%20genomes%20have%20limited%20phylogenetic%20signal%20for%20taxonomic%20resolution%20of%20species.%20peerj%2013%20%282025%29%3A%20e18731.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Wishgrad, V., L.E.K. Shizuru, K. Takata, A.D. Montgomery, D. Wagner, & R.J. Toonen. 2025. Hawaiian black coral (Antipatharia) complete mitochondrial genomes have limited phylogenetic signal for taxonomic resolution of species. PeerJ 13 (2025): e18731.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.7717/peerj.18731" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Wishgrad%2C%20V.%2C%20L.E.K.%20Shizuru%2C%20K.%20Takata%2C%20A.D.%20Montgomery%2C%20D.%20Wagner%2C%20%26%20R.J.%20Toonen.%202025.%20Hawaiian%20black%20coral%20%28Antipatharia%29%20complete%20mitochondrial%20genomes%20have%20limited%20phylogenetic%20signal%20for%20taxonomic%20resolution%20of%20species.%20PeerJ%2013%20%282025%29%3A%20e18731." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Wishgrad%2C%20V.%2C%20L.E.K.%20Shizuru%2C%20K.%20Takata%2C%20A.D.%20Montgomery%2C%20D.%20Wagner%2C%20%26%20R.J.%20Toonen.%202025.%20Hawaiian%20black%20coral%20%28Antipatharia%29%20complete%20mitochondrial%20genomes%20have%20limited%20phylogenetic%20signal%20for%20taxonomic%20resolution%20of%20species.%20PeerJ%2013%20%282025%29%3A%20e18731.">Copy citation</button>
+          <span class="pill">doi.org/10.7717/peerj.18731</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2024">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2024</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2024" data-text="fiedler%2C%20b.k.%2C%20a.d.%20montgomery%2C%20f.%20chong%2C%20h.%20miyagi%2C%20m.%20carletti%2C%20r.%20ramen%20das%2C%20y.%20shintani%2C%20t.%20ravasi%2C%20%26%20j.d.%20reimer.%20%202024.%20delineation%20of%20outbreak%20stages%20of%20the%20coral-killing%20sponge%20terpios%20hoshinota.%20regional%20studies%20in%20marine%20science%20%2880%29%3A%201%E2%80%938.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Fiedler, B.K., A.D. Montgomery, F. Chong, H. Miyagi, M. Carletti, R. Ramen Das, Y. Shintani, T. Ravasi, & J.D. Reimer.  2024. Delineation of outbreak stages of the coral-killing sponge Terpios hoshinota. Regional Studies in Marine Science (80): 1–8.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1016/j.rsma.2024.103871" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Fiedler%2C%20B.K.%2C%20A.D.%20Montgomery%2C%20F.%20Chong%2C%20H.%20Miyagi%2C%20M.%20Carletti%2C%20R.%20Ramen%20Das%2C%20Y.%20Shintani%2C%20T.%20Ravasi%2C%20%26%20J.D.%20Reimer.%20%202024.%20Delineation%20of%20outbreak%20stages%20of%20the%20coral-killing%20sponge%20Terpios%20hoshinota.%20Regional%20Studies%20in%20Marine%20Science%20%2880%29%3A%201%E2%80%938." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Fiedler%2C%20B.K.%2C%20A.D.%20Montgomery%2C%20F.%20Chong%2C%20H.%20Miyagi%2C%20M.%20Carletti%2C%20R.%20Ramen%20Das%2C%20Y.%20Shintani%2C%20T.%20Ravasi%2C%20%26%20J.D.%20Reimer.%20%202024.%20Delineation%20of%20outbreak%20stages%20of%20the%20coral-killing%20sponge%20Terpios%20hoshinota.%20Regional%20Studies%20in%20Marine%20Science%20%2880%29%3A%201%E2%80%938.">Copy citation</button>
+          <span class="pill">doi.org/10.1016/j.rsma.2024.103871</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2024" data-text="ramen%20das%2C%20r.%2C%20a.%20montgomery%2C%20h.%20miyagi%2C%20%26%20j.r.%20reimer.%202024.%20assessment%20of%20coral%20diseases%20in%20the%20shallow%20reefs%20of%20aka-jima%20marine%20reserve%20%28amr%29%2C%20with%20a%20brief%20geographic%20perspective%20of%20disease%20occurrence%20throughout%20the%20larger%20kerama-shoto%20marine%20national%20park%20%28kmnp%29%2C%20okinawa%2C%20japan.%20%20regional%20studies%20in%20marine%20science%2080%3A%201%E2%80%9310.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Ramen Das, R., A. Montgomery, H. Miyagi, & J.R. Reimer. 2024. Assessment of coral diseases in the shallow reefs of Aka-jima Marine Reserve (AMR), with a brief geographic perspective of disease occurrence throughout the larger Kerama-Shoto Marine National Park (KMNP), Okinawa, Japan.  Regional Studies in Marine Science 80: 1–10.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1016/j.rsma.2024.103904" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Ramen%20Das%2C%20R.%2C%20A.%20Montgomery%2C%20H.%20Miyagi%2C%20%26%20J.R.%20Reimer.%202024.%20Assessment%20of%20coral%20diseases%20in%20the%20shallow%20reefs%20of%20Aka-jima%20Marine%20Reserve%20%28AMR%29%2C%20with%20a%20brief%20geographic%20perspective%20of%20disease%20occurrence%20throughout%20the%20larger%20Kerama-Shoto%20Marine%20National%20Park%20%28KMNP%29%2C%20Okinawa%2C%20Japan.%20%20Regional%20Studies%20in%20Marine%20Science%2080%3A%201%E2%80%9310." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Ramen%20Das%2C%20R.%2C%20A.%20Montgomery%2C%20H.%20Miyagi%2C%20%26%20J.R.%20Reimer.%202024.%20Assessment%20of%20coral%20diseases%20in%20the%20shallow%20reefs%20of%20Aka-jima%20Marine%20Reserve%20%28AMR%29%2C%20with%20a%20brief%20geographic%20perspective%20of%20disease%20occurrence%20throughout%20the%20larger%20Kerama-Shoto%20Marine%20National%20Park%20%28KMNP%29%2C%20Okinawa%2C%20Japan.%20%20Regional%20Studies%20in%20Marine%20Science%2080%3A%201%E2%80%9310.">Copy citation</button>
+          <span class="pill">doi.org/10.1016/j.rsma.2024.103904</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2024" data-text="shizuru%2C%20l.e.k.%2C%20a.d.%20montgomery%2C%20d.%20wagner%2C%20e.b.%20freel%20%26%20r.j.%20toonen.%202024.%20the%20complete%20mitochondrial%20genome%20of%20a%20species%20of%20cirrhipathes%20de%20blainville%2C%201830%20from%20kaua%CA%BBi%2C%20hawai%CA%BBi%20%28hexacorallia%3A%20antipatharia%29%2C%20mitochondrial%20dna%20part%20b%2C%209%3A2%2C%20223-226.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Shizuru, L.E.K., A.D. Montgomery, D. Wagner, E.B. Freel & R.J. Toonen. 2024. The complete mitochondrial genome of a species of Cirrhipathes de Blainville, 1830 from Kauaʻi, Hawaiʻi (Hexacorallia: Antipatharia), Mitochondrial DNA Part B, 9:2, 223-226.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1080/23802359.2024.2310130" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Shizuru%2C%20L.E.K.%2C%20A.D.%20Montgomery%2C%20D.%20Wagner%2C%20E.B.%20Freel%20%26%20R.J.%20Toonen.%202024.%20The%20complete%20mitochondrial%20genome%20of%20a%20species%20of%20Cirrhipathes%20de%20Blainville%2C%201830%20from%20Kaua%CA%BBi%2C%20Hawai%CA%BBi%20%28Hexacorallia%3A%20Antipatharia%29%2C%20Mitochondrial%20DNA%20Part%20B%2C%209%3A2%2C%20223-226." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Shizuru%2C%20L.E.K.%2C%20A.D.%20Montgomery%2C%20D.%20Wagner%2C%20E.B.%20Freel%20%26%20R.J.%20Toonen.%202024.%20The%20complete%20mitochondrial%20genome%20of%20a%20species%20of%20Cirrhipathes%20de%20Blainville%2C%201830%20from%20Kaua%CA%BBi%2C%20Hawai%CA%BBi%20%28Hexacorallia%3A%20Antipatharia%29%2C%20Mitochondrial%20DNA%20Part%20B%2C%209%3A2%2C%20223-226.">Copy citation</button>
+          <span class="pill">doi.org/10.1080/23802359.2024.2310130</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2021">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2021</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2021" data-text="montgomery%2C%20a.d.%2C%20d.%20fenner%2C%20m.j.%20donahue%2C%20%26%20r.j.%20toonen.%202021.%20community%20similarity%20and%20species%20overlap%20between%20habitats%20provide%20insight%20into%20the%20deep%20reef%20refuge%20hypothesis.%20scientific%20reports%2011%281%29%3A%201%E2%80%9315.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Montgomery, A.D., D. Fenner, M.J. Donahue, & R.J. Toonen. 2021. Community similarity and species overlap between habitats provide insight into the deep reef refuge hypothesis. Scientific Reports 11(1): 1–15.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1038/s41598-021-03128-8" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Montgomery%2C%20A.D.%2C%20D.%20Fenner%2C%20M.J.%20Donahue%2C%20%26%20R.J.%20Toonen.%202021.%20Community%20similarity%20and%20species%20overlap%20between%20habitats%20provide%20insight%20into%20the%20deep%20reef%20refuge%20hypothesis.%20Scientific%20Reports%2011%281%29%3A%201%E2%80%9315." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Montgomery%2C%20A.D.%2C%20D.%20Fenner%2C%20M.J.%20Donahue%2C%20%26%20R.J.%20Toonen.%202021.%20Community%20similarity%20and%20species%20overlap%20between%20habitats%20provide%20insight%20into%20the%20deep%20reef%20refuge%20hypothesis.%20Scientific%20Reports%2011%281%29%3A%201%E2%80%9315.">Copy citation</button>
+          <span class="pill">doi.org/10.1038/s41598-021-03128-8</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2021" data-text="salimi%2C%20p.a.%2C%20j.c.%20creed%2C%20m.m.%20esch%2C%20d.%20fenner%2C%20z.%20jaafar%2C%20j.c.%20levesque%2C%20a.d.%20montgomery%2C%20j.k.%20patterson%20edward%2C%20k.%20diraviya%20raj%2C%20m.a.%20salimi%2C%20%26%20m.%20sweet.%202021.%20non-native%20species%20in%20tropical%20marine%20ecosystems%3A%20impact%2C%20trends%20and%20management%20responses.%20marine%20biodiversity%20records%2014%281%29%3A%2011.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Salimi, P.A., J.C. Creed, M.M. Esch, D. Fenner, Z. Jaafar, J.C. Levesque, A.D. Montgomery, J.K. Patterson Edward, K. Diraviya Raj, M.A. Salimi, & M. Sweet. 2021. Non-native species in tropical marine ecosystems: impact, trends and management responses. Marine Biodiversity Records 14(1): 11.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1186/s41200-021-00206-8" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Salimi%2C%20P.A.%2C%20J.C.%20Creed%2C%20M.M.%20Esch%2C%20D.%20Fenner%2C%20Z.%20Jaafar%2C%20J.C.%20Levesque%2C%20A.D.%20Montgomery%2C%20J.K.%20Patterson%20Edward%2C%20K.%20Diraviya%20Raj%2C%20M.A.%20Salimi%2C%20%26%20M.%20Sweet.%202021.%20Non-native%20species%20in%20tropical%20marine%20ecosystems%3A%20impact%2C%20trends%20and%20management%20responses.%20Marine%20Biodiversity%20Records%2014%281%29%3A%2011." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Salimi%2C%20P.A.%2C%20J.C.%20Creed%2C%20M.M.%20Esch%2C%20D.%20Fenner%2C%20Z.%20Jaafar%2C%20J.C.%20Levesque%2C%20A.D.%20Montgomery%2C%20J.K.%20Patterson%20Edward%2C%20K.%20Diraviya%20Raj%2C%20M.A.%20Salimi%2C%20%26%20M.%20Sweet.%202021.%20Non-native%20species%20in%20tropical%20marine%20ecosystems%3A%20impact%2C%20trends%20and%20management%20responses.%20Marine%20Biodiversity%20Records%2014%281%29%3A%2011.">Copy citation</button>
+          <span class="pill">doi.org/10.1186/s41200-021-00206-8</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2019">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2019</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2019" data-text="montgomery%2C%20a.%20d.%2C%20d.%20fenner%2C%20%26%20r.j.%20toonen.%202019.%20annotated%20checklist%20for%20stony%20corals%20of%20american%20s%C4%81moa%20with%20reference%20to%20mesophotic%20depth%20records.%20zookeys%20849%3A%201%E2%80%93170.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Montgomery, A. D., D. Fenner, & R.J. Toonen. 2019. Annotated checklist for stony corals of American Sāmoa with reference to mesophotic depth records. ZooKeys 849: 1–170.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.3897/zookeys.849.34763" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Montgomery%2C%20A.%20D.%2C%20D.%20Fenner%2C%20%26%20R.J.%20Toonen.%202019.%20Annotated%20checklist%20for%20stony%20corals%20of%20American%20S%C4%81moa%20with%20reference%20to%20mesophotic%20depth%20records.%20ZooKeys%20849%3A%201%E2%80%93170." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Montgomery%2C%20A.%20D.%2C%20D.%20Fenner%2C%20%26%20R.J.%20Toonen.%202019.%20Annotated%20checklist%20for%20stony%20corals%20of%20American%20S%C4%81moa%20with%20reference%20to%20mesophotic%20depth%20records.%20ZooKeys%20849%3A%201%E2%80%93170.">Copy citation</button>
+          <span class="pill">doi.org/10.3897/zookeys.849.34763</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2019" data-text="montgomery%2C%20a.d.%2C%20d.%20fenner%2C%20r.%20kosaki%2C%20r.l.%20pyle%2C%20d.%20wagner%2C%20%26%20r.j.%20toonen.%202019.%20american%20samoa.%20in%20y.%20loya%2C%20k.a.%20puglise%20and%20t.%20bridge%2C%20editors.%20mesophotic%20coral%20ecosystems%2C%20coral%20reefs%20of%20the%20world%2012.%20springer%20nature%20switzerland.%20pp.%20387%E2%80%93407.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Montgomery, A.D., D. Fenner, R. Kosaki, R.L. Pyle, D. Wagner, & R.J. Toonen. 2019. American Samoa. In Y. Loya, K.A. Puglise and T. Bridge, editors. Mesophotic Coral Ecosystems, Coral Reefs of the World 12. Springer Nature Switzerland. pp. 387–407.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/978-3-319-92735-0_22" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Montgomery%2C%20A.D.%2C%20D.%20Fenner%2C%20R.%20Kosaki%2C%20R.L.%20Pyle%2C%20D.%20Wagner%2C%20%26%20R.J.%20Toonen.%202019.%20American%20Samoa.%20In%20Y.%20Loya%2C%20K.A.%20Puglise%20and%20T.%20Bridge%2C%20editors.%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20387%E2%80%93407." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Montgomery%2C%20A.D.%2C%20D.%20Fenner%2C%20R.%20Kosaki%2C%20R.L.%20Pyle%2C%20D.%20Wagner%2C%20%26%20R.J.%20Toonen.%202019.%20American%20Samoa.%20In%20Y.%20Loya%2C%20K.A.%20Puglise%20and%20T.%20Bridge%2C%20editors.%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20387%E2%80%93407.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/978-3-319-92735-0_22</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2019" data-text="spalding%20h.l.%2C%20j.m.%20copus%2C%20b.w.%20bowen%2C%20k.k.%20kosaki%2C%20k.%20longenecker%2C%20a.d.%20montgomery%2C%20j.l.%20padilla-gami%C3%B1o%2C%20f.a.%20parrish%2C%20m.s.%20roth%2C%20s.j.%20rowley%2C%20%26%20r.j.%20toonen.%202019.%20hawaiian%20archipelago.%20in%3A%20loya%20y.%2C%20k.a.%20puglise%20and%20t.%20bridge%20%28eds%29%20mesophotic%20coral%20ecosystems%2C%20coral%20reefs%20of%20the%20world%2012.%20springer%20nature%20switzerland.%20pp.%20445%E2%80%93464.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Spalding H.L., J.M. Copus, B.W. Bowen, K.K. Kosaki, K. Longenecker, A.D. Montgomery, J.L. Padilla-Gamiño, F.A. Parrish, M.S. Roth, S.J. Rowley, & R.J. Toonen. 2019. Hawaiian Archipelago. In: Loya Y., K.A. Puglise and T. Bridge (eds) Mesophotic Coral Ecosystems, Coral Reefs of the World 12. Springer Nature Switzerland. pp. 445–464.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/978-3-319-92735-0_25" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Spalding%20H.L.%2C%20J.M.%20Copus%2C%20B.W.%20Bowen%2C%20K.K.%20Kosaki%2C%20K.%20Longenecker%2C%20A.D.%20Montgomery%2C%20J.L.%20Padilla-Gami%C3%B1o%2C%20F.A.%20Parrish%2C%20M.S.%20Roth%2C%20S.J.%20Rowley%2C%20%26%20R.J.%20Toonen.%202019.%20Hawaiian%20Archipelago.%20In%3A%20Loya%20Y.%2C%20K.A.%20Puglise%20and%20T.%20Bridge%20%28eds%29%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20445%E2%80%93464." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Spalding%20H.L.%2C%20J.M.%20Copus%2C%20B.W.%20Bowen%2C%20K.K.%20Kosaki%2C%20K.%20Longenecker%2C%20A.D.%20Montgomery%2C%20J.L.%20Padilla-Gami%C3%B1o%2C%20F.A.%20Parrish%2C%20M.S.%20Roth%2C%20S.J.%20Rowley%2C%20%26%20R.J.%20Toonen.%202019.%20Hawaiian%20Archipelago.%20In%3A%20Loya%20Y.%2C%20K.A.%20Puglise%20and%20T.%20Bridge%20%28eds%29%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20445%E2%80%93464.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/978-3-319-92735-0_25</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2019" data-text="bo%2C%20m.%2C%20a.d.%20montgomery%2C%20d.m.%20opresko%2C%20d.%20wagner%2C%20%26%20g.%20bavestrello.%20%202019.%20%20antipatharians%20of%20the%20mesophotic%20zone%3A%20four%20case%20studies.%20%20in%20y.%20loya%2C%20k.a.%20puglise%20and%20t.%20bridge%2C%20editors.%20mesophotic%20coral%20ecosystems%2C%20coral%20reefs%20of%20the%20world%2012.%20springer%20nature%20switzerland.%20pp.%20683%E2%80%93708.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Bo, M., A.D. Montgomery, D.M. Opresko, D. Wagner, & G. Bavestrello.  2019.  Antipatharians of the mesophotic zone: four case studies.  In Y. Loya, K.A. Puglise and T. Bridge, editors. Mesophotic Coral Ecosystems, Coral Reefs of the World 12. Springer Nature Switzerland. pp. 683–708.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/978-3-319-92735-0_37" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Bo%2C%20M.%2C%20A.D.%20Montgomery%2C%20D.M.%20Opresko%2C%20D.%20Wagner%2C%20%26%20G.%20Bavestrello.%20%202019.%20%20Antipatharians%20of%20the%20mesophotic%20zone%3A%20four%20case%20studies.%20%20In%20Y.%20Loya%2C%20K.A.%20Puglise%20and%20T.%20Bridge%2C%20editors.%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20683%E2%80%93708." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Bo%2C%20M.%2C%20A.D.%20Montgomery%2C%20D.M.%20Opresko%2C%20D.%20Wagner%2C%20%26%20G.%20Bavestrello.%20%202019.%20%20Antipatharians%20of%20the%20mesophotic%20zone%3A%20four%20case%20studies.%20%20In%20Y.%20Loya%2C%20K.A.%20Puglise%20and%20T.%20Bridge%2C%20editors.%20Mesophotic%20Coral%20Ecosystems%2C%20Coral%20Reefs%20of%20the%20World%2012.%20Springer%20Nature%20Switzerland.%20pp.%20683%E2%80%93708.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/978-3-319-92735-0_37</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2016">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2016</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2016" data-text="pyle%2C%20r.l.%2C%20r.%20boland%2C%20h.%20bolick%2C%20b.%20bowen%2C%20c.j.%20bradley%2C%20c.%20kane%2C%20r.k.%20kosaki%2C%20r.%20langston%2C%20k.%20longenecker%2C%20a.d.%20montgomery%2C%20f.a.%20parrish%2C%20b.n.%20popp%2C%20j.%20rooney%2C%20c.m.%20smith%2C%20d.%20wagner%2C%20%26%20h.l.%20spalding.%20%202016.%20%20a%20comprehensive%20investigation%20of%20mesophotic%20coral%20ecosystems%20in%20the%20hawaiian%20archipelago.%20%20peerj%2C%204%2C%20e2475.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Pyle, R.L., R. Boland, H. Bolick, B. Bowen, C.J. Bradley, C. Kane, R.K. Kosaki, R. Langston, K. Longenecker, A.D. Montgomery, F.A. Parrish, B.N. Popp, J. Rooney, C.M. Smith, D. Wagner, & H.L. Spalding.  2016.  A Comprehensive Investigation of Mesophotic Coral Ecosystems in the Hawaiian Archipelago.  PeerJ, 4, e2475.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.7717/peerj.2475" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Pyle%2C%20R.L.%2C%20R.%20Boland%2C%20H.%20Bolick%2C%20B.%20Bowen%2C%20C.J.%20Bradley%2C%20C.%20Kane%2C%20R.K.%20Kosaki%2C%20R.%20Langston%2C%20K.%20Longenecker%2C%20A.D.%20Montgomery%2C%20F.A.%20Parrish%2C%20B.N.%20Popp%2C%20J.%20Rooney%2C%20C.M.%20Smith%2C%20D.%20Wagner%2C%20%26%20H.L.%20Spalding.%20%202016.%20%20A%20Comprehensive%20Investigation%20of%20Mesophotic%20Coral%20Ecosystems%20in%20the%20Hawaiian%20Archipelago.%20%20PeerJ%2C%204%2C%20e2475." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Pyle%2C%20R.L.%2C%20R.%20Boland%2C%20H.%20Bolick%2C%20B.%20Bowen%2C%20C.J.%20Bradley%2C%20C.%20Kane%2C%20R.K.%20Kosaki%2C%20R.%20Langston%2C%20K.%20Longenecker%2C%20A.D.%20Montgomery%2C%20F.A.%20Parrish%2C%20B.N.%20Popp%2C%20J.%20Rooney%2C%20C.M.%20Smith%2C%20D.%20Wagner%2C%20%26%20H.L.%20Spalding.%20%202016.%20%20A%20Comprehensive%20Investigation%20of%20Mesophotic%20Coral%20Ecosystems%20in%20the%20Hawaiian%20Archipelago.%20%20PeerJ%2C%204%2C%20e2475.">Copy citation</button>
+          <span class="pill">doi.org/10.7717/peerj.2475</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2015">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2015</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2015" data-text="costa%2C%20b.%2C%20m.s.%20kendall%2C%20f.a.%20parrish%2C%20j.%20rooney%2C%20r.c.%20boland%2C%20m.%20chow%2C%20j.%20lecky%2C%20a.%20montgomery%2C%20%26%20h.%20spalding.%20%202015.%20%20identifying%20suitable%20locations%20for%20mesophotic%20hard%20corals%20offshore%20of%20maui%2C%20hawai%CA%BBi.%20%20plos%20one%2010%287%29%3A%20e0130285.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Costa, B., M.S. Kendall, F.A. Parrish, J. Rooney, R.C. Boland, M. Chow, J. Lecky, A. Montgomery, & H. Spalding.  2015.  Identifying suitable locations for mesophotic hard corals offshore of Maui, Hawaiʻi.  PLoS ONE 10(7): e0130285.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1371/journal.pone.0130285" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Costa%2C%20B.%2C%20M.S.%20Kendall%2C%20F.A.%20Parrish%2C%20J.%20Rooney%2C%20R.C.%20Boland%2C%20M.%20Chow%2C%20J.%20Lecky%2C%20A.%20Montgomery%2C%20%26%20H.%20Spalding.%20%202015.%20%20Identifying%20suitable%20locations%20for%20mesophotic%20hard%20corals%20offshore%20of%20Maui%2C%20Hawai%CA%BBi.%20%20PLoS%20ONE%2010%287%29%3A%20e0130285." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Costa%2C%20B.%2C%20M.S.%20Kendall%2C%20F.A.%20Parrish%2C%20J.%20Rooney%2C%20R.C.%20Boland%2C%20M.%20Chow%2C%20J.%20Lecky%2C%20A.%20Montgomery%2C%20%26%20H.%20Spalding.%20%202015.%20%20Identifying%20suitable%20locations%20for%20mesophotic%20hard%20corals%20offshore%20of%20Maui%2C%20Hawai%CA%BBi.%20%20PLoS%20ONE%2010%287%29%3A%20e0130285.">Copy citation</button>
+          <span class="pill">doi.org/10.1371/journal.pone.0130285</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2012">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2012</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2012" data-text="opresko%2C%20d.m.%2C%20d.%20wagner%2C%20a.d.%20montgomery%2C%20%26%20m.r.%20brugler.%20%202012.%20%20discovery%20of%20aphanipathes%20verticillata%20%28cnidaria%3A%20anthozoa%3A%20antipatharia%29%20in%20the%20hawaiian%20islands.%20%20zootaxa%203348%3A%2024%E2%80%9339.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Opresko, D.M., D. Wagner, A.D. Montgomery, & M.R. Brugler.  2012.  Discovery of Aphanipathes verticillata (Cnidaria: Anthozoa: Antipatharia) in the Hawaiian Islands.  Zootaxa 3348: 24–39.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <span class="pill">Link coming soon</span>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Opresko%2C%20D.M.%2C%20D.%20Wagner%2C%20A.D.%20Montgomery%2C%20%26%20M.R.%20Brugler.%20%202012.%20%20Discovery%20of%20Aphanipathes%20verticillata%20%28Cnidaria%3A%20Anthozoa%3A%20Antipatharia%29%20in%20the%20Hawaiian%20Islands.%20%20Zootaxa%203348%3A%2024%E2%80%9339." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Opresko%2C%20D.M.%2C%20D.%20Wagner%2C%20A.D.%20Montgomery%2C%20%26%20M.R.%20Brugler.%20%202012.%20%20Discovery%20of%20Aphanipathes%20verticillata%20%28Cnidaria%3A%20Anthozoa%3A%20Antipatharia%29%20in%20the%20Hawaiian%20Islands.%20%20Zootaxa%203348%3A%2024%E2%80%9339.">Copy citation</button>
+          
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2012" data-text="wagner%2C%20d.%2C%20r.g.%20waller%2C%20a.d.%20montgomery%2C%20c.d.%20kelley%2C%20%26%20r.j.%20toonen.%20%202012.%20%20sexual%20reproduction%20of%20the%20hawaiian%20black%20coral%20antipathes%20griggi%20%28cnidaria%3A%20antipatharia%29.%20%20coral%20reefs%2031%283%29%3A%20795%E2%80%93806.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Wagner, D., R.G. Waller, A.D. Montgomery, C.D. Kelley, & R.J. Toonen.  2012.  Sexual reproduction of the Hawaiian black coral Antipathes griggi (Cnidaria: Antipatharia).  Coral Reefs 31(3): 795–806.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/s00338-012-0882-3" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Wagner%2C%20D.%2C%20R.G.%20Waller%2C%20A.D.%20Montgomery%2C%20C.D.%20Kelley%2C%20%26%20R.J.%20Toonen.%20%202012.%20%20Sexual%20reproduction%20of%20the%20Hawaiian%20black%20coral%20Antipathes%20griggi%20%28Cnidaria%3A%20Antipatharia%29.%20%20Coral%20Reefs%2031%283%29%3A%20795%E2%80%93806." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Wagner%2C%20D.%2C%20R.G.%20Waller%2C%20A.D.%20Montgomery%2C%20C.D.%20Kelley%2C%20%26%20R.J.%20Toonen.%20%202012.%20%20Sexual%20reproduction%20of%20the%20Hawaiian%20black%20coral%20Antipathes%20griggi%20%28Cnidaria%3A%20Antipatharia%29.%20%20Coral%20Reefs%2031%283%29%3A%20795%E2%80%93806.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/s00338-012-0882-3</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2010">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2010</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2010" data-text="wagner%2C%20d.%20m.r.%20brugler%2C%20d.m.%20opresko%2C%20s.c.%20france%2C%20a.d.%20montgomery%2C%20%26%20r.%20toonen.%20%202010.%20%20using%20morphometrics%2C%20in-situ%20observations%20and%20genetic%20characters%20to%20distinguish%20amongst%20commercially%20valuable%20hawaiian%20black%20coral%20species%3B%20a%20redescription%20of%20antipathes%20grandis%20verrill%2C%201928%20%28antipatharia%3A%20antipathidae%29.%20%20invertebrate%20systematics%2024%3A%20271%E2%80%93290.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Wagner, D. M.R. Brugler, D.M. Opresko, S.C. France, A.D. Montgomery, & R. Toonen.  2010.  Using morphometrics, in-situ observations and genetic characters to distinguish amongst commercially valuable Hawaiian black coral species; a redescription of Antipathes grandis Verrill, 1928 (Antipatharia: Antipathidae).  Invertebrate Systematics 24: 271–290.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1071/IS10004" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Wagner%2C%20D.%20M.R.%20Brugler%2C%20D.M.%20Opresko%2C%20S.C.%20France%2C%20A.D.%20Montgomery%2C%20%26%20R.%20Toonen.%20%202010.%20%20Using%20morphometrics%2C%20in-situ%20observations%20and%20genetic%20characters%20to%20distinguish%20amongst%20commercially%20valuable%20Hawaiian%20black%20coral%20species%3B%20a%20redescription%20of%20Antipathes%20grandis%20Verrill%2C%201928%20%28Antipatharia%3A%20Antipathidae%29.%20%20Invertebrate%20Systematics%2024%3A%20271%E2%80%93290." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Wagner%2C%20D.%20M.R.%20Brugler%2C%20D.M.%20Opresko%2C%20S.C.%20France%2C%20A.D.%20Montgomery%2C%20%26%20R.%20Toonen.%20%202010.%20%20Using%20morphometrics%2C%20in-situ%20observations%20and%20genetic%20characters%20to%20distinguish%20amongst%20commercially%20valuable%20Hawaiian%20black%20coral%20species%3B%20a%20redescription%20of%20Antipathes%20grandis%20Verrill%2C%201928%20%28Antipatharia%3A%20Antipathidae%29.%20%20Invertebrate%20Systematics%2024%3A%20271%E2%80%93290.">Copy citation</button>
+          <span class="pill">doi.org/10.1071/IS10004</span>
+        </div>
+      </article>
+    
+
+      <article class="card pub-card" data-year="2010" data-text="rooney%2C%20j.%2C%20e.%20donham%2C%20a.%20montgomery%2C%20h.l.%20spalding%2C%20f.a.%20parrish%2C%20r.%20boland%2C%20d.%20fenner%2C%20j%2C%20gove%2C%20%26%20o.%20vetter.%20%202010.%20%20mesophotic%20coral%20ecosystems%20in%20the%20hawaiian%20archipelago.%20%20corals%20reefs%2029%3A%20361%E2%80%93367.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Rooney, J., E. Donham, A. Montgomery, H.L. Spalding, F.A. Parrish, R. Boland, D. Fenner, J, Gove, & O. Vetter.  2010.  Mesophotic coral ecosystems in the Hawaiian Archipelago.  Corals Reefs 29: 361–367.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/s00338-010-0596-3" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Rooney%2C%20J.%2C%20E.%20Donham%2C%20A.%20Montgomery%2C%20H.L.%20Spalding%2C%20F.A.%20Parrish%2C%20R.%20Boland%2C%20D.%20Fenner%2C%20J%2C%20Gove%2C%20%26%20O.%20Vetter.%20%202010.%20%20Mesophotic%20coral%20ecosystems%20in%20the%20Hawaiian%20Archipelago.%20%20Corals%20Reefs%2029%3A%20361%E2%80%93367." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Rooney%2C%20J.%2C%20E.%20Donham%2C%20A.%20Montgomery%2C%20H.L.%20Spalding%2C%20F.A.%20Parrish%2C%20R.%20Boland%2C%20D.%20Fenner%2C%20J%2C%20Gove%2C%20%26%20O.%20Vetter.%20%202010.%20%20Mesophotic%20coral%20ecosystems%20in%20the%20Hawaiian%20Archipelago.%20%20Corals%20Reefs%2029%3A%20361%E2%80%93367.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/s00338-010-0596-3</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2007">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2007</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2007" data-text="kenyon%2C%20j.%2C%20s.%20godwin%2C%20a.%20montgomery%2C%20%26%20r.%20brainard.%20%202007.%20%20rare%20sighting%20of%20acropora%20cytherea%20in%20the%20main%20hawaiian%20islands.%20%20coral%20reefs%2026%282%29%3A%20309.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Kenyon, J., S. Godwin, A. Montgomery, & R. Brainard.  2007.  Rare sighting of Acropora cytherea in the main Hawaiian Islands.  Coral Reefs 26(2): 309.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1007/s00338-007-0198-x" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Kenyon%2C%20J.%2C%20S.%20Godwin%2C%20A.%20Montgomery%2C%20%26%20R.%20Brainard.%20%202007.%20%20Rare%20sighting%20of%20Acropora%20cytherea%20in%20the%20main%20Hawaiian%20Islands.%20%20Coral%20Reefs%2026%282%29%3A%20309." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Kenyon%2C%20J.%2C%20S.%20Godwin%2C%20A.%20Montgomery%2C%20%26%20R.%20Brainard.%20%202007.%20%20Rare%20sighting%20of%20Acropora%20cytherea%20in%20the%20main%20Hawaiian%20Islands.%20%20Coral%20Reefs%2026%282%29%3A%20309.">Copy citation</button>
+          <span class="pill">doi.org/10.1007/s00338-007-0198-x</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2006">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2006</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2006" data-text="otoshi%2C%20c.o.%2C%20a.d.%20montgomery%2C%20e.m.%20matsuda%2C%20%26%20s.m.%20moss.%20%202006.%20%20effects%20of%20artificial%20substrate%20and%20water%20source%20on%20growth%20of%20juvenile%20pacific%20white%20shrimp%2C%20litopenaeus%20vannamei.%20%20journal%20of%20the%20world%20aquaculture%20society%2037%282%29%3A%20210%E2%80%93213.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Otoshi, C.O., A.D. Montgomery, E.M. Matsuda, & S.M. Moss.  2006.  Effects of artificial substrate and water source on growth of juvenile Pacific White Shrimp, Litopenaeus vannamei.  Journal of the World Aquaculture Society 37(2): 210–213.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <span class="pill">Link coming soon</span>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Otoshi%2C%20C.O.%2C%20A.D.%20Montgomery%2C%20E.M.%20Matsuda%2C%20%26%20S.M.%20Moss.%20%202006.%20%20Effects%20of%20artificial%20substrate%20and%20water%20source%20on%20growth%20of%20juvenile%20Pacific%20White%20Shrimp%2C%20Litopenaeus%20vannamei.%20%20Journal%20of%20the%20World%20Aquaculture%20Society%2037%282%29%3A%20210%E2%80%93213." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Otoshi%2C%20C.O.%2C%20A.D.%20Montgomery%2C%20E.M.%20Matsuda%2C%20%26%20S.M.%20Moss.%20%202006.%20%20Effects%20of%20artificial%20substrate%20and%20water%20source%20on%20growth%20of%20juvenile%20Pacific%20White%20Shrimp%2C%20Litopenaeus%20vannamei.%20%20Journal%20of%20the%20World%20Aquaculture%20Society%2037%282%29%3A%20210%E2%80%93213.">Copy citation</button>
+          
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2002">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2002</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2002" data-text="montgomery%2C%20a.d.%20%202002.%20%20the%20feasibility%20of%20transplanting%20black%20coral%20%28order%3A%20antipatharia%29.%20%20hydrobiologia%20471%3A%20157%E2%80%93164.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Montgomery, A.D.  2002.  The feasibility of transplanting black coral (Order: Antipatharia).  Hydrobiologia 471: 157–164.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1023/A:1016573926566" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Montgomery%2C%20A.D.%20%202002.%20%20The%20feasibility%20of%20transplanting%20black%20coral%20%28Order%3A%20Antipatharia%29.%20%20Hydrobiologia%20471%3A%20157%E2%80%93164." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Montgomery%2C%20A.D.%20%202002.%20%20The%20feasibility%20of%20transplanting%20black%20coral%20%28Order%3A%20Antipatharia%29.%20%20Hydrobiologia%20471%3A%20157%E2%80%93164.">Copy citation</button>
+          <span class="pill">doi.org/10.1023/A:1016573926566</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="2001">
+      <div class="inner">
+        <div class="section-head">
+          <h2>2001</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="2001" data-text="otoshi%2C%20c.a.%2C%20a.%20d.%20montgomery%2C%20a.m.%20look%2C%20%26%20s.m.%20moss.%20%202001.%20%20effects%20of%20diet%20and%20water%20source%20on%20the%20nursery%20production%20of%20the%20pacific%20white%20shrimp%2C%20litopenaeus%20vannamei.%20%20journal%20of%20the%20world%20aquaculture%20society%2032%282%29%3A%20243%E2%80%93249.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Otoshi, C.A., A. D. Montgomery, A.M. Look, & S.M. Moss.  2001.  Effects of diet and water source on the nursery production of the Pacific White Shrimp, Litopenaeus vannamei.  Journal of the World Aquaculture Society 32(2): 243–249.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="https://doi.org/10.1111/j.1749-7345.2001.tb01102.x" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Otoshi%2C%20C.A.%2C%20A.%20D.%20Montgomery%2C%20A.M.%20Look%2C%20%26%20S.M.%20Moss.%20%202001.%20%20Effects%20of%20diet%20and%20water%20source%20on%20the%20nursery%20production%20of%20the%20Pacific%20White%20Shrimp%2C%20Litopenaeus%20vannamei.%20%20Journal%20of%20the%20World%20Aquaculture%20Society%2032%282%29%3A%20243%E2%80%93249." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Otoshi%2C%20C.A.%2C%20A.%20D.%20Montgomery%2C%20A.M.%20Look%2C%20%26%20S.M.%20Moss.%20%202001.%20%20Effects%20of%20diet%20and%20water%20source%20on%20the%20nursery%20production%20of%20the%20Pacific%20White%20Shrimp%2C%20Litopenaeus%20vannamei.%20%20Journal%20of%20the%20World%20Aquaculture%20Society%2032%282%29%3A%20243%E2%80%93249.">Copy citation</button>
+          <span class="pill">doi.org/10.1111/j.1749-7345.2001.tb01102.x</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+    <section class="panel section year-section" data-year="1996">
+      <div class="inner">
+        <div class="section-head">
+          <h2>1996</h2>
+          <p>Peer-reviewed publications and book chapters.</p>
+        </div>
+        <div class="card-grid">
+          
+      <article class="card pub-card" data-year="1996" data-text="radtke%2C%20r.l.%2C%20d.p.%20fey%2C%20a.f.%20decicco%2C%20%26%20a.%20montgomery.%20%201996.%20%20otolith%20microstructure%20in%20young-of-the-year%20dolly%20varden%2C%20salvelinus%20malma%2C%20from%20american%20and%20asian%20populations%3A%20resolution%20of%20comparative%20life%20history%20characteristics.%20%20arctic%2049%282%29%3A%20162%E2%80%93169.">
+        <h3 style="margin:0 0 .55rem;font-size:1rem;line-height:1.35;">Radtke, R.L., D.P. Fey, A.F. DeCicco, & A. Montgomery.  1996.  Otolith microstructure in young-of-the-year Dolly Varden, Salvelinus malma, from American and Asian populations: resolution of comparative life history characteristics.  Arctic 49(2): 162–169.</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+          <a class="btn outline" href="http://www.jstor.org/stable/40512326" target="_blank" rel="noopener">Open</a>
+          <a class="btn outline" href="https://scholar.google.com/scholar?q=Radtke%2C%20R.L.%2C%20D.P.%20Fey%2C%20A.F.%20DeCicco%2C%20%26%20A.%20Montgomery.%20%201996.%20%20Otolith%20microstructure%20in%20young-of-the-year%20Dolly%20Varden%2C%20Salvelinus%20malma%2C%20from%20American%20and%20Asian%20populations%3A%20resolution%20of%20comparative%20life%20history%20characteristics.%20%20Arctic%2049%282%29%3A%20162%E2%80%93169." target="_blank" rel="noopener">Scholar</a>
+          <button class="btn outline copy-btn" type="button" data-citation="Radtke%2C%20R.L.%2C%20D.P.%20Fey%2C%20A.F.%20DeCicco%2C%20%26%20A.%20Montgomery.%20%201996.%20%20Otolith%20microstructure%20in%20young-of-the-year%20Dolly%20Varden%2C%20Salvelinus%20malma%2C%20from%20American%20and%20Asian%20populations%3A%20resolution%20of%20comparative%20life%20history%20characteristics.%20%20Arctic%2049%282%29%3A%20162%E2%80%93169.">Copy citation</button>
+          <span class="pill">www.jstor.org/stable/40512326</span>
+        </div>
+      </article>
+    
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Publication filtering + copy citation (page-only script)
+    (function() {
+      const searchEl = document.getElementById('pubSearch');
+      const yearEl = document.getElementById('pubYear');
+      const clearEl = document.getElementById('pubClear');
+      const toast = document.getElementById('toast');
+      const cards = Array.from(document.querySelectorAll('.pub-card'));
+      const yearSections = Array.from(document.querySelectorAll('.year-section'));
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        window.clearTimeout(showToast._t);
+        showToast._t = window.setTimeout(() => toast.classList.remove('show'), 1400);
+      }
+
+      function decodeQuoted(q) {
+        try { return decodeURIComponent(q.replace(/\+/g, '%20')); } catch(e) { return q; }
+      }
+
+      function applyFilters() {
+        const q = (searchEl.value || '').trim().toLowerCase();
+        const y = yearEl.value || '';
+
+        let anyVisibleByYear = new Map();
+        yearSections.forEach(sec => anyVisibleByYear.set(sec.getAttribute('data-year'), false));
+
+        cards.forEach(card => {
+          const cardYear = card.getAttribute('data-year') || '';
+          const text = decodeQuoted(card.getAttribute('data-text') || '').toLowerCase();
+          const matchesYear = (!y || cardYear === y);
+          const matchesText = (!q || text.includes(q));
+
+          const show = matchesYear && matchesText;
+          card.classList.toggle('hidden', !show);
+
+          if (show) anyVisibleByYear.set(cardYear, true);
+        });
+
+        // Hide empty year sections
+        yearSections.forEach(sec => {
+          const yv = sec.getAttribute('data-year');
+          sec.classList.toggle('hidden', !anyVisibleByYear.get(yv));
+        });
+      }
+
+      // Wire up events
+      ['input','change'].forEach(evt => {
+        searchEl.addEventListener(evt, applyFilters);
+        yearEl.addEventListener(evt, applyFilters);
+      });
+      clearEl.addEventListener('click', () => {
+        searchEl.value = '';
+        yearEl.value = '';
+        applyFilters();
+        showToast('Filters cleared');
+      });
+
+      // Copy citation buttons
+      document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.copy-btn');
+        if (!btn) return;
+        const citation = decodeQuoted(btn.getAttribute('data-citation') || '');
+        try {
+          await navigator.clipboard.writeText(citation);
+          showToast('Citation copied');
+        } catch (err) {
+          // Fallback
+          const ta = document.createElement('textarea');
+          ta.value = citation;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          showToast('Citation copied');
+        }
+      });
+
+      // Initial
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>
