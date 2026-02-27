@@ -375,3 +375,17 @@ input:focus, textarea:focus{
   justify-self: end;   /* aligns right inside grid */
   align-self: start;   /* keeps it near top */
 }
+
+#coverage .coverage-banner {
+  width: 140px !important;
+  max-width: 140px !important;
+  height: auto !important;
+  object-fit: cover;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+
+  float: right;
+  margin: 0 0 12px 18px;
+}
