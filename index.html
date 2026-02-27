@@ -32,6 +32,7 @@
   </header>
 
   <main class="wrap">
+
     <!-- Hero -->
     <section class="panel hero">
       <div class="hero-inner">
@@ -64,7 +65,7 @@
       </div>
     </section>
 
-    <!-- Coverage Section with SMALL side banner image -->
+    <!-- Coverage Section with VERY SMALL subtle side image -->
     <section class="panel section" id="coverage">
       <div class="inner">
         <div class="section-head">
@@ -72,31 +73,36 @@
           <p>Pacific-wide support with methods adapted to local conditions and logistics.</p>
         </div>
 
-        <div class="two-col">
-          <div>
-            <p class="lead" style="margin-top:0">
-              We work across shallow and mesophotic reef environments and collaborate with local teams to ensure
-              efficient field operations and clear deliverables.
-            </p>
+        <div style="position:relative;">
 
-            <div class="actions">
-              <a class="btn primary" href="/map/">Explore service area</a>
-              <a class="btn outline" href="/services/">What we do</a>
-            </div>
-          </div>
+          <!-- Small accent image -->
+          <img src="/assets/img/coral_banner.jpg"
+               alt="Coral banner accent"
+               style="
+                 position:absolute;
+                 right:0;
+                 top:0;
+                 width:110px;
+                 height:auto;
+                 border-radius:14px;
+                 border:1px solid rgba(255,255,255,.25);
+                 box-shadow:0 10px 30px rgba(0,0,0,.6);
+                 opacity:.9;
+               " />
 
-          <!-- Smaller scaled banner image -->
-          <div style="display:flex; align-items:center; justify-content:center;">
-            <img src="/assets/img/coral_banner.jpg" 
-                 alt="Coral banner montage"
-                 style="max-width:320px; width:100%; height:auto; 
-                        border-radius:18px; 
-                        border:1px solid rgba(255,255,255,.25);
-                        box-shadow:0 16px 44px rgba(0,0,0,.7);" />
+          <p class="lead" style="margin-top:0; max-width:75%;">
+            We work across shallow and mesophotic reef environments and collaborate with local teams
+            to ensure efficient field operations and clear deliverables. The small image on the right
+            is intentionally subtle—serving as a visual accent rather than a focal feature.
+          </p>
+
+          <div class="actions" style="margin-top:1rem;">
+            <a class="btn primary" href="/map/">Explore service area</a>
+            <a class="btn outline" href="/services/">What we do</a>
           </div>
         </div>
 
-        <div class="card-grid" style="margin-top:1.1rem;">
+        <div class="card-grid" style="margin-top:1.8rem;">
           <article class="card">
             <h3>Rapid field mobilization</h3>
             <p>Targeted surveys, standardized protocols, and streamlined logistics for time-sensitive needs.</p>
