@@ -352,8 +352,8 @@ input:focus, textarea:focus{
 
 /* Force banner sizing ONLY for the banner */
 .coverage img.coverage-banner{
-  width:140px !important;      /* hard cap */
-  max-width:140px !important;  /* hard cap */
+  width:70px !important;      /* hard cap */
+  max-width:70px !important;  /* hard cap */
   height:auto !important;
   object-fit:cover;
   border-radius:14px;
@@ -364,8 +364,8 @@ input:focus, textarea:focus{
 
 /* Coverage banner inside the existing grid layout */
 #coverage .two-col .coverage-banner {
-  width: 140px !important;
-  max-width: 140px !important;
+  width: 70px !important;
+  max-width: 70px !important;
   height: auto !important;
   object-fit: cover;
   border-radius: 14px;
@@ -377,8 +377,8 @@ input:focus, textarea:focus{
 }
 
 #coverage .coverage-banner {
-  width: 140px !important;
-  max-width: 140px !important;
+  width: 70px !important;
+  max-width: 70px !important;
   height: auto !important;
   object-fit: cover;
 
