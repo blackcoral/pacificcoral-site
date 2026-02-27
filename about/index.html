@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About & Contact | Pacific Coral Research Services</title>
+  <meta name="description" content="About Pacific Coral Research Services and how to get in touch." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="/assets/img/logo.png" alt="Pacific Coral Research Services logo" />
+        <div>
+          <div class="title">Pacific Coral Research Services</div>
+          <div class="sub">Science-based coral reef consulting across the Pacific</div>
+        </div>
+      </div>
+
+      <button class="menu-btn" type="button" aria-label="Toggle navigation">Menu</button>
+
+      <nav class="nav collapsed" aria-label="Primary">
+        <a href="/" data-path="/">Home</a>
+        <a href="/services/" data-path="/services">Services</a>
+        <a href="/about/" data-path="/about">About & Contact</a>
+        <a href="/map/" data-path="/map">Service Area</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel section">
+      <div class="inner">
+        <div class="section-head">
+          <h2>About</h2>
+          <p>A brief introduction now — expandable later with bios, case studies, and partners.</p>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <p class="lead" style="margin-top:0">
+              Pacific Coral Research Services provides science-based support for coral reef monitoring, impact assessment, and
+              conservation planning across the Pacific Islands. This text is intentionally general and can be refined as you
+              finalize your public messaging.
+            </p>
+            <p class="lead">
+              You can add: a short founder bio, agency/partner experience, flagship projects, and a concise list of technical
+              strengths (methods, regions, and focus taxa).
+            </p>
+          </div>
+
+          <div class="mini-grid">
+            <div class="mini">
+              <h3>What we value</h3>
+              <p>Clarity, rigor, and deliverables that help people make better decisions.</p>
+            </div>
+            <div class="mini">
+              <h3>How we work</h3>
+              <p>Collaborative, transparent, and tuned to local needs and logistics.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="band" style="margin-top:1.2rem">
+          <div class="band-inner">
+            <figure>
+              <img src="/assets/img/yellow-fan.jpg" alt="Fan coral habitat" />
+              <figcaption class="caption">Add a short bio + project highlights here when ready.</figcaption>
+            </figure>
+            <figure>
+              <img src="/assets/img/soft-coral.jpg" alt="Soft coral habitat" />
+              <figcaption class="caption">Optional: add partner logos or testimonials later.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="panel section">
+      <div class="inner">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>Send a project inquiry. (This can later be wired to a real form handler.)</p>
+        </div>
+
+        <!-- Simple mailto form (works without backend). For production, swap to a form service or Cloudflare Worker. -->
+        <form action="mailto:info@pacificcoral.org" method="post" enctype="text/plain">
+          <div class="form">
+            <div class="field">
+              <label for="name">Name *</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+            <div class="field">
+              <label for="org">Organization</label>
+              <input id="org" name="organization" type="text" />
+            </div>
+            <div class="field">
+              <label for="region">Region / Island group</label>
+              <input id="region" name="region" type="text" placeholder="e.g., Hawaiʻi, Okinawa, Palau" />
+            </div>
+            <div class="field full">
+              <label for="message">Project details *</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+          </div>
+
+          <div class="actions" style="margin-top:1rem">
+            <button class="btn primary" type="submit">Send message</button>
+            <button class="btn outline" type="reset">Clear</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
+  </footer>
+</body>
+</html>
