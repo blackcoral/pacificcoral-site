@@ -431,24 +431,76 @@ input:focus, textarea:focus{
   backdrop-filter: blur(4px);
 }
 
-/* Service Card Hover Lift */
+/* ================================
+   Service Cards — Deep Ocean Glass
+   Replace your existing .service-card block with this
+   ================================ */
 
-.service-card {
-  text-decoration: none;
-  color: inherit;
-  transition: 
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+.service-card{
+  /* Make the whole card link behave like a card */
+  display:block;
+  text-decoration:none;
+  color:inherit;
+
+  /* Deep ocean glass surface */
+  background: rgba(6,18,30,.86);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 18px;
+
+  /* Glass effect */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* Smooth motion */
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease,
+    background .22s ease;
 }
 
-.service-card:hover {
+/* Typography contrast inside the card */
+.service-card h3{
+  margin:0 0 .45rem;
+  color:#f2fbff;
+  text-shadow: 0 0 10px rgba(65,192,240,.18);
+}
+
+.service-card p{
+  color:#d7ecff;
+}
+
+.service-card li{
+  color:#c6e2ff;
+}
+
+/* Hover lift + subtle cyan glow */
+.service-card:hover{
   transform: translateY(-6px);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.75);
-  border-color: rgba(124,236,255,0.35);
+  border-color: rgba(124,236,255,.32);
+  background: rgba(6,18,30,.92);
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.75),
+    0 0 18px rgba(65,192,240,.22);
 }
 
-.service-card:active {
+/* Active (click) state */
+.service-card:active{
   transform: translateY(-2px);
+}
+
+/* Focus ring for keyboard accessibility */
+.service-card:focus-visible{
+  outline: none;
+  border-color: rgba(124,236,255,.55);
+  box-shadow:
+    0 0 0 3px rgba(65,192,240,.22),
+    0 26px 70px rgba(0,0,0,.65);
+}
+
+/* Optional: keep lists tidy inside cards */
+.service-card ul{
+  margin: .45rem 0 0;
+  padding-left: 1.05rem;
 }
 
