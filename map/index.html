@@ -8,20 +8,14 @@
   <link rel="stylesheet" href="/assets/css/style.css" />
   <script src="/assets/js/site.js" defer></script>
 
-  <!-- CesiumJS (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/cesium@1.122.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/cesium@1.122.0/Build/Cesium/Cesium.js" defer></script>
+  <!-- NASA Web WorldWind (via npm CDN) -->
+  <script src="https://unpkg.com/@nasaworldwind/worldwind@0.9.0/build/dist/worldwind.min.js" defer></script>
 
   <style>
-    /* Page-local styles for Cesium embed (keeps your global style.css clean) */
-    .globe-wrap{
-      margin-top: 1.1rem;
-      display:grid;
-      grid-template-columns: minmax(0,1fr);
-      gap: 1rem;
-    }
+    /* Page-local styling so you don't have to touch /assets/css/style.css */
+    .ww-wrap{ margin-top: 1.1rem; }
 
-    .globe-panel{
+    .ww-panel{
       position:relative;
       border-radius: var(--radius);
       overflow:hidden;
@@ -30,18 +24,19 @@
       box-shadow: var(--shadow);
     }
 
-    #cesiumContainer{
+    /* Canvas must have explicit size */
+    #wwdCanvas{
       width: 100%;
-      height: 540px;
+      height: 560px;
       display:block;
     }
 
-    /* Glass info card overlay */
-    .globe-info{
+    /* Glass overlay: info panel */
+    .ww-info{
       position:absolute;
       left: 16px;
       bottom: 16px;
-      max-width: 460px;
+      max-width: 520px;
       padding: 14px 14px 12px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.14);
@@ -49,25 +44,16 @@
       backdrop-filter: blur(16px);
       box-shadow: 0 18px 56px rgba(0,0,0,.72);
     }
-    .globe-info h3{
-      margin:0 0 .25rem;
-      font-size: 1.02rem;
-      letter-spacing:.01em;
-    }
-    .globe-info p{
-      margin:.2rem 0 0;
-      color: var(--muted);
-      font-size: .9rem;
-      line-height: 1.55;
-    }
-    .globe-info .meta{
+    .ww-info h3{ margin:0 0 .25rem; font-size: 1.02rem; letter-spacing:.01em; }
+    .ww-info p{ margin:.2rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+    .ww-info .meta{
       margin-top:.6rem;
       display:flex;
       flex-wrap:wrap;
       gap:.5rem;
       align-items:center;
     }
-    .globe-info .chip{
+    .ww-info .chip{
       font-size:.78rem;
       color: var(--muted);
       padding: .18rem .62rem;
@@ -76,16 +62,16 @@
       background: rgba(0,8,16,.55);
       white-space:nowrap;
     }
-    .globe-info a{
+    .ww-info a{
       color: var(--accent-2);
       text-decoration:none;
       border-bottom: 1px solid rgba(124,236,255,.35);
       padding-bottom:1px;
     }
-    .globe-info a:hover{ border-bottom-color: rgba(124,236,255,.75); }
+    .ww-info a:hover{ border-bottom-color: rgba(124,236,255,.75); }
 
-    /* Quick-jump buttons */
-    .globe-controls{
+    /* Quick jump controls */
+    .ww-controls{
       position:absolute;
       top: 14px;
       right: 14px;
@@ -93,7 +79,7 @@
       gap:.5rem;
       flex-wrap:wrap;
       justify-content:flex-end;
-      max-width: min(520px, 70vw);
+      max-width: min(560px, 74vw);
       padding: 10px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.14);
@@ -101,7 +87,7 @@
       backdrop-filter: blur(16px);
       box-shadow: 0 18px 56px rgba(0,0,0,.60);
     }
-    .globe-controls button{
+    .ww-controls button{
       appearance:none;
       border: 1px solid rgba(255,255,255,.18);
       background: rgba(0,0,0,.25);
@@ -113,7 +99,7 @@
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
       white-space:nowrap;
     }
-    .globe-controls button:hover{
+    .ww-controls button:hover{
       background: rgba(65,192,240,.14);
       border-color: rgba(124,236,255,.35);
       transform: translateY(-1px);
@@ -121,9 +107,9 @@
 
     /* Mobile */
     @media (max-width: 640px){
-      #cesiumContainer{ height: 460px; }
-      .globe-info{ left: 12px; right: 12px; max-width: unset; }
-      .globe-controls{ left: 12px; right: 12px; max-width: unset; justify-content:flex-start; }
+      #wwdCanvas{ height: 480px; }
+      .ww-info{ left: 12px; right: 12px; max-width: unset; }
+      .ww-controls{ left: 12px; right: 12px; max-width: unset; justify-content:flex-start; }
     }
   </style>
 </head>
@@ -155,53 +141,51 @@
       <div class="inner">
         <div class="section-head">
           <h2>Service Area</h2>
-          <p>Explore Pacific-wide coverage on an interactive 3D globe. Click markers to learn more.</p>
+          <p>WorldWind globe with NASA-style base layers. Click the pins to learn more.</p>
         </div>
 
         <div class="two-col">
           <div>
             <p class="lead" style="margin-top:0">
-              This globe is centered on the Pacific. Use the quick buttons to jump to common regions,
-              or click a marker to view details. You can later replace the placeholder “Learn more” links
-              with real pages (e.g., <span class="pill">/areas/hawaii/</span>).
+              This page uses <strong>NASA Web WorldWind</strong>. Click a location pin to see details and follow a link.
+              You can later replace the placeholder region links (e.g., <span class="pill">/areas/hawaii/</span>) with real pages.
             </p>
 
             <div class="mini-grid">
               <div class="mini">
                 <h3>How to use</h3>
-                <p>Drag to rotate, scroll to zoom, right-drag to tilt. Click markers for details.</p>
+                <p>Drag to navigate, scroll to zoom. Click pins to open region details.</p>
               </div>
               <div class="mini">
                 <h3>Customize later</h3>
-                <p>Add/remove locations, adjust descriptions, and link each region to its own page.</p>
+                <p>Add more islands/regions by duplicating the location objects in the script.</p>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <h3>Regions we serve</h3>
+            <h3>Current locations</h3>
             <ul>
-              <li>Hawaiʻi + Northwestern Hawaiian Islands</li>
-              <li>Okinawa + Ryukyu Archipelago</li>
-              <li>Micronesia (Guam, CNMI, Palau, FSM)</li>
-              <li>Polynesia (American Samoa, Samoa, Tonga)</li>
-              <li>Melanesia (Fiji, Vanuatu)</li>
-              <li>Other Pacific Islands on request</li>
+              <li>Hawaiʻi</li>
+              <li>American Samoa</li>
+              <li>Guam</li>
+              <li>CNMI</li>
+              <li>Okinawa (Ryukyus)</li>
             </ul>
           </div>
         </div>
 
-        <div class="globe-wrap">
-          <div class="globe-panel" aria-label="Interactive 3D globe">
-            <div id="cesiumContainer"></div>
+        <div class="ww-wrap">
+          <div class="ww-panel">
+            <canvas id="wwdCanvas">
+              Your browser does not support HTML5 Canvas.
+            </canvas>
 
-            <div class="globe-controls" id="globeControls" aria-label="Quick jump controls">
-              <!-- Buttons injected by JS -->
-            </div>
+            <div class="ww-controls" id="wwControls" aria-label="Quick jump controls"></div>
 
-            <div class="globe-info" id="globeInfo" aria-live="polite">
+            <div class="ww-info" aria-live="polite">
               <h3 id="infoTitle">Click a location</h3>
-              <p id="infoBody">Select a marker to view region notes and open a link for more details.</p>
+              <p id="infoBody">Select a pin to view region notes and open a link for more details.</p>
               <div class="meta">
                 <span class="chip" id="infoChip">Pacific coverage</span>
                 <span class="chip"><a id="infoLink" href="/about/#contact">Contact for details</a></span>
@@ -212,23 +196,6 @@
 
       </div>
     </section>
-
-    <section class="band" aria-label="Photography band">
-      <div class="band-inner">
-        <figure>
-          <img src="/assets/img/reef-slope.JPG" alt="Reef slope habitat" loading="lazy" decoding="async" />
-          <figcaption class="caption">
-            Tip: you can add region-specific photos to each “Learn more” page as your portfolio grows.
-          </figcaption>
-        </figure>
-        <figure>
-          <img src="/assets/img/coral-polyps.JPG" alt="Coral polyps" loading="lazy" decoding="async" />
-          <figcaption class="caption">
-            Want a lighter map style? We can switch to a 2D basemap (Leaflet) or a custom GIS export.
-          </figcaption>
-        </figure>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
@@ -236,126 +203,114 @@
   </footer>
 
   <script>
-    // Wait for Cesium to load (it's deferred)
     window.addEventListener("DOMContentLoaded", () => {
-      if (!window.Cesium) return;
+      if (!window.WorldWind) return;
 
-      // Use a no-token setup by explicitly choosing an open imagery provider.
-      // (Avoids Cesium ion token requirements for default baselayers.)
-      const viewer = new Cesium.Viewer("cesiumContainer", {
-        animation: false,
-        timeline: false,
-        geocoder: false,
-        sceneModePicker: false,
-        homeButton: false,
-        navigationHelpButton: false,
-        fullscreenButton: false,
-        baseLayerPicker: false,
-        infoBox: false,
-        selectionIndicator: false,
-        imageryProvider: new Cesium.OpenStreetMapImageryProvider({
-          url: "https://a.tile.openstreetmap.org/"
-        }),
-        terrainProvider: new Cesium.EllipsoidTerrainProvider()
-      });
+      const wwd = new WorldWind.WorldWindow("wwdCanvas");
 
-      viewer.scene.globe.enableLighting = true;
+      // Base imagery layers
+      wwd.addLayer(new WorldWind.BMNGOneImageLayer());   // Blue Marble (single image)
+      wwd.addLayer(new WorldWind.BMNGLandsatLayer());    // Landsat tiles
 
-      // Pacific-facing default view
-      viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(-160, 10, 14000000)
-      });
+      // UI layers
+      wwd.addLayer(new WorldWind.CompassLayer());
+      wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
+      wwd.addLayer(new WorldWind.ViewControlsLayer(wwd));
 
-      // Locations (edit these later; add links to dedicated pages)
+      // Placemark layer
+      const pinLayer = new WorldWind.RenderableLayer("Service Locations");
+      wwd.addLayer(pinLayer);
+
       const locations = [
-        { id:"hawaii",  name:"Hawaiʻi", lat:21.3, lon:-157.8, chip:"Central Pacific",
-          desc:"Coral reef monitoring, impact assessment, and restoration planning across the Hawaiian Archipelago.",
-          link:"/areas/hawaii/" },
-        { id:"nwhi", name:"Northwestern Hawaiian Islands", lat:26.0, lon:-170.0, chip:"Remote operations",
-          desc:"Remote reef support, expedition planning, and analysis/reporting workflows.",
-          link:"/areas/nwhi/" },
-        { id:"guam", name:"Guam & CNMI", lat:13.5, lon:144.8, chip:"Micronesia",
-          desc:"Survey design, benthic/fish assessments, and program support across the Mariana Islands.",
-          link:"/areas/mariana/" },
-        { id:"palau", name:"Palau", lat:7.5, lon:134.6, chip:"Micronesia",
-          desc:"Monitoring frameworks and targeted surveys tailored to local management priorities.",
-          link:"/areas/palau/" },
-        { id:"fsm", name:"FSM", lat:6.9, lon:158.2, chip:"Micronesia",
-          desc:"Regional support across the Federated States of Micronesia—fieldwork + analytics by request.",
-          link:"/areas/fsm/" },
-        { id:"okinawa", name:"Okinawa / Ryukyus", lat:26.2, lon:127.7, chip:"Japan",
-          desc:"Coral reef science and consulting across the Ryukyu Archipelago, including monitoring and disease/outbreak support.",
-          link:"/areas/okinawa/" },
-        { id:"amsamoa", name:"American Samoa", lat:-14.3, lon:-170.7, chip:"Polynesia",
-          desc:"Shallow + mesophotic reef assessments and long-term monitoring support.",
-          link:"/areas/american-samoa/" },
-        { id:"fiji", name:"Fiji", lat:-17.7, lon:178.1, chip:"Melanesia",
-          desc:"Survey design and analytics support for reef monitoring and conservation planning.",
-          link:"/areas/fiji/" },
-        { id:"vanuatu", name:"Vanuatu", lat:-15.4, lon:167.3, chip:"Melanesia",
-          desc:"Monitoring and rapid assessment support by request—methods adapted to local logistics.",
-          link:"/areas/vanuatu/" }
+        {
+          id: "hawaii",
+          name: "Hawaiʻi",
+          lat: 21.3069,
+          lon: -157.8583,
+          chip: "Central Pacific",
+          desc: "Monitoring, impact assessment, and decision-ready reporting across the Hawaiian Archipelago.",
+          link: "/areas/hawaii/"
+        },
+        {
+          id: "american-samoa",
+          name: "American Samoa",
+          lat: -14.2756,
+          lon: -170.7020,
+          chip: "Polynesia",
+          desc: "Shallow + mesophotic reef assessments and long-term monitoring support.",
+          link: "/areas/american-samoa/"
+        },
+        {
+          id: "guam",
+          name: "Guam",
+          lat: 13.4443,
+          lon: 144.7937,
+          chip: "Micronesia",
+          desc: "Survey design, field support, and analysis/reporting for reef monitoring programs.",
+          link: "/areas/guam/"
+        },
+        {
+          id: "cnmi",
+          name: "CNMI",
+          lat: 15.0979,
+          lon: 145.6739,
+          chip: "Micronesia",
+          desc: "Program support for coral reef monitoring and assessment across the Northern Mariana Islands.",
+          link: "/areas/cnmi/"
+        },
+        {
+          id: "okinawa",
+          name: "Okinawa (Ryukyus)",
+          lat: 26.2124,
+          lon: 127.6809,
+          chip: "Japan",
+          desc: "Monitoring and outbreak/disease support across the Ryukyu Archipelago.",
+          link: "/areas/okinawa/"
+        }
       ];
 
-      // Create a consistent pin icon (no external assets needed)
-      const pinBuilder = new Cesium.PinBuilder();
-      const pinDataUrl = pinBuilder.fromColor(new Cesium.Color(0.49, 0.93, 1.0, 0.95), 48).toDataURL();
+      function makePlacemark(loc){
+        const position = new WorldWind.Position(loc.lat, loc.lon, 0);
 
-      locations.forEach((loc) => {
-        viewer.entities.add({
-          id: loc.id,
-          position: Cesium.Cartesian3.fromDegrees(loc.lon, loc.lat, 0),
-          billboard: {
-            image: pinDataUrl,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-            scale: 0.9
-          },
-          label: {
-            text: loc.name,
-            font: "14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
-            fillColor: Cesium.Color.WHITE,
-            outlineColor: Cesium.Color.BLACK,
-            outlineWidth: 3,
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            pixelOffset: new Cesium.Cartesian2(0, -46),
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-            showBackground: true,
-            backgroundColor: new Cesium.Color(0.02, 0.06, 0.10, 0.55)
-          },
-          properties: {
-            name: loc.name,
-            desc: loc.desc,
-            link: loc.link,
-            chip: loc.chip,
-            lat: loc.lat,
-            lon: loc.lon
-          }
-        });
-      });
+        const attrs = new WorldWind.PlacemarkAttributes(null);
+        attrs.imageScale = 1.15;
+        attrs.imageOffset = new WorldWind.Offset(
+          WorldWind.OFFSET_FRACTION, 0.5,
+          WorldWind.OFFSET_FRACTION, 0.0
+        );
+        attrs.labelAttributes.color = WorldWind.Color.WHITE;
+        attrs.labelAttributes.offset = new WorldWind.Offset(
+          WorldWind.OFFSET_FRACTION, 0.5,
+          WorldWind.OFFSET_FRACTION, 1.2
+        );
+        attrs.labelAttributes.font = "14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
 
-      // Quick-jump buttons
-      const controls = document.getElementById("globeControls");
-      function flyToLocation(loc){
-        viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(loc.lon, loc.lat, 9000000),
-          duration: 1.2
-        });
-        setInfo(loc);
+        // Built-in pushpin icon (ships with WorldWind assets)
+        attrs.imageSource = WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
+
+        const highlight = new WorldWind.PlacemarkAttributes(attrs);
+        highlight.imageScale = 1.35;
+
+        const pm = new WorldWind.Placemark(position, true, attrs);
+        pm.altitudeMode = WorldWind.CLAMP_TO_GROUND;
+        pm.label = loc.name;
+        pm.highlightAttributes = highlight;
+        pm.userProperties = loc;
+
+        return pm;
       }
-      function makeBtn(loc){
-        const b = document.createElement("button");
-        b.type = "button";
-        b.textContent = loc.name;
-        b.addEventListener("click", () => flyToLocation(loc));
-        return b;
-      }
-      ["Hawaiʻi","Okinawa / Ryukyus","Guam & CNMI","Palau","American Samoa","Fiji"].forEach((name) => {
-        const loc = locations.find(l => l.name === name);
-        if (loc) controls.appendChild(makeBtn(loc));
-      });
 
-      // Info panel wiring
+      const placemarks = locations.map(makePlacemark);
+      placemarks.forEach(pm => pinLayer.addRenderable(pm));
+      wwd.redraw();
+
+      // Pacific-facing start view
+      wwd.navigator.lookAtLocation.latitude = 10;
+      wwd.navigator.lookAtLocation.longitude = -160;
+      wwd.navigator.range = 12000000;
+      wwd.redraw();
+
+      // Info panel
       const infoTitle = document.getElementById("infoTitle");
       const infoBody  = document.getElementById("infoBody");
       const infoLink  = document.getElementById("infoLink");
@@ -364,29 +319,51 @@
       function setInfo(loc){
         infoTitle.textContent = loc.name;
         infoBody.textContent  = loc.desc;
+        infoChip.textContent  = loc.chip || "Pacific coverage";
         infoLink.textContent  = "Learn more";
         infoLink.href         = loc.link || "/about/#contact";
-        infoChip.textContent  = loc.chip || "Pacific coverage";
       }
 
-      // Click-to-select
-      const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-      handler.setInputAction((movement) => {
-        const picked = viewer.scene.pick(movement.position);
-        if (Cesium.defined(picked) && picked.id && picked.id.properties) {
-          const p = picked.id.properties;
-          setInfo({
-            name: p.name.getValue(),
-            desc: p.desc.getValue(),
-            link: p.link.getValue(),
-            chip: p.chip.getValue(),
-            lat:  p.lat.getValue(),
-            lon:  p.lon.getValue()
-          });
-        }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      // Picking: clickable pins
+      const canvas = wwd.canvas;
+      canvas.addEventListener("click", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
 
-      window.addEventListener("resize", () => viewer.resize());
+        const pickList = wwd.pick(wwd.canvasCoordinates(x, y));
+
+        placemarks.forEach(pm => pm.highlighted = false);
+
+        if (pickList && pickList.objects && pickList.objects.length){
+          const picked = pickList.objects.find(o => o.userObject instanceof WorldWind.Placemark);
+          if (picked){
+            const pm = picked.userObject;
+            pm.highlighted = true;
+            wwd.redraw();
+            if (pm.userProperties) setInfo(pm.userProperties);
+          }
+        }
+      });
+
+      // Quick-jump controls
+      const controls = document.getElementById("wwControls");
+      function goTo(loc){
+        wwd.goTo(new WorldWind.Location(loc.lat, loc.lon));
+        setInfo(loc);
+      }
+      function mkBtn(loc){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = loc.name;
+        b.addEventListener("click", () => goTo(loc));
+        return b;
+      }
+
+      ["Hawaiʻi","Okinawa (Ryukyus)","Guam","CNMI","American Samoa"].forEach((name) => {
+        const loc = locations.find(l => l.name === name);
+        if (loc) controls.appendChild(mkBtn(loc));
+      });
     });
   </script>
 </body>
