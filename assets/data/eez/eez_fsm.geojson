@@ -1,0 +1,9 @@
+{
+  "type": "FeatureCollection",
+  "name": "Micronesia (Federated States of)",
+  "features": [],
+  "properties": {
+    "status": "empty_template",
+    "notes": "Populate this file with an EEZ polygon (GeoJSON) for this entity. See README.md and scripts/fetch_split_eez.py."
+  }
+}
