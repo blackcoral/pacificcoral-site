@@ -3,368 +3,233 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Service Area | Pacific Coral Research Services</title>
-  <meta name="description" content="Pacific Island regions where services can be provided." />
+  <title>Pacific Coral Research Services · Map</title>
+  <meta name="description" content="Interactive service coverage map" />
   <link rel="stylesheet" href="/assets/css/style.css" />
   <script src="/assets/js/site.js" defer></script>
 
-  <!-- NASA Web WorldWind (via npm CDN) -->
-  <script src="https://unpkg.com/@nasaworldwind/worldwind@0.9.0/build/dist/worldwind.min.js" defer></script>
+  <!-- NASA WorldWind (Web) -->
+  <script src="https://worldwind.arc.nasa.gov/web/worldwind.min.js"></script>
 
   <style>
-    /* Page-local styling so you don't have to touch /assets/css/style.css */
-    .ww-wrap{ margin-top: 1.1rem; }
-
-    .ww-panel{
-      position:relative;
-      border-radius: var(--radius);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(3,10,18,.55);
-      box-shadow: var(--shadow);
-    }
-
-    /* Canvas must have explicit size */
-    #wwdCanvas{
-      width: 100%;
-      height: 560px;
-      display:block;
-    }
-
-    /* Glass overlay: info panel */
-    .ww-info{
-      position:absolute;
-      left: 16px;
-      bottom: 16px;
-      max-width: 520px;
-      padding: 14px 14px 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(3,10,18,.72);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 18px 56px rgba(0,0,0,.72);
-    }
-    .ww-info h3{ margin:0 0 .25rem; font-size: 1.02rem; letter-spacing:.01em; }
-    .ww-info p{ margin:.2rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.55; }
-    .ww-info .meta{
-      margin-top:.6rem;
-      display:flex;
-      flex-wrap:wrap;
-      gap:.5rem;
-      align-items:center;
-    }
-    .ww-info .chip{
-      font-size:.78rem;
-      color: var(--muted);
-      padding: .18rem .62rem;
-      border-radius: var(--pill);
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,8,16,.55);
-      white-space:nowrap;
-    }
-    .ww-info a{
-      color: var(--accent-2);
-      text-decoration:none;
-      border-bottom: 1px solid rgba(124,236,255,.35);
-      padding-bottom:1px;
-    }
-    .ww-info a:hover{ border-bottom-color: rgba(124,236,255,.75); }
-
-    /* Quick jump controls */
-    .ww-controls{
-      position:absolute;
-      top: 14px;
-      right: 14px;
-      display:flex;
-      gap:.5rem;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      max-width: min(560px, 74vw);
-      padding: 10px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(3,10,18,.58);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 18px 56px rgba(0,0,0,.60);
-    }
-    .ww-controls button{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.25);
-      color: var(--text);
-      border-radius: var(--pill);
-      padding: .35rem .7rem;
-      font-size: .78rem;
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      white-space:nowrap;
-    }
-    .ww-controls button:hover{
-      background: rgba(65,192,240,.14);
-      border-color: rgba(124,236,255,.35);
-      transform: translateY(-1px);
-    }
-
-    /* Mobile */
-    @media (max-width: 640px){
-      #wwdCanvas{ height: 480px; }
-      .ww-info{ left: 12px; right: 12px; max-width: unset; }
-      .ww-controls{ left: 12px; right: 12px; max-width: unset; justify-content:flex-start; }
-    }
+    /* Minimal page-specific overrides */
+    .map-shell{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:1.1rem;align-items:stretch}
+    .map-wrap{min-height:62vh;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18)}
+    #wwd{width:100%;height:100%;display:block}
+    .map-side{display:flex;flex-direction:column;gap:.9rem}
+    .loc-btn{width:100%;text-align:left;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(3,11,20,.86);color:inherit;padding:.85rem .95rem;cursor:pointer}
+    .loc-btn:hover{border-color:rgba(124,236,255,.32);box-shadow:0 18px 44px rgba(0,0,0,.55)}
+    .hint{color:var(--muted);font-size:.88rem;line-height:1.55}
+    @media (max-width: 980px){.map-shell{grid-template-columns:1fr}.map-wrap{min-height:55vh}}
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="header-inner">
       <div class="brand">
-        <img src="/assets/img/logo.JPG" alt="Pacific Coral Research Services logo" />
+        <img src="/assets/img/logo.jpg" alt="Pacific Coral Research Services logo" />
         <div>
           <div class="title">Pacific Coral Research Services</div>
           <div class="sub">Science-based coral reef consulting across the Pacific</div>
         </div>
       </div>
-
       <button class="menu-btn" type="button" aria-label="Toggle navigation">Menu</button>
-
       <nav class="nav collapsed" aria-label="Primary">
         <a href="/" data-path="/">Home</a>
         <a href="/services/" data-path="/services">Services</a>
-        <a href="/about/" data-path="/about">About & Contact</a>
-        <a href="/map/" data-path="/map">Service Area</a>
+        <a href="/about/" data-path="/about">About</a>
+        <a href="/map/" data-path="/map">Map</a>
         <a href="/research/" data-path="/research">Research</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
+
     <section class="panel section">
       <div class="inner">
         <div class="section-head">
-          <h2>Service Area</h2>
-          <p>WorldWind globe with NASA-style base layers. Click the pins to learn more.</p>
+          <h2>Service coverage map</h2>
+          <p>Clickable EEZ outlines (yellow) + quick navigation.</p>
+        </div>
+
+        <div class="map-shell">
+          <div class="map-wrap">
+            <canvas id="wwd" aria-label="WorldWind map"></canvas>
+          </div>
+
+          <aside class="map-side">
+            <div class="card">
+              <h3 style="margin-top:0">Quick locations</h3>
+              <p class="hint" style="margin-top:.4rem">
+                Use the buttons to fly the camera, or click an EEZ outline to open details.
+              </p>
+            </div>
+
+            <button class="loc-btn" data-lon="-157.8" data-lat="21.3" data-alt="2200000">Hawaiʻi</button>
+            <button class="loc-btn" data-lon="-170.7" data-lat="-14.3" data-alt="2600000">American Samoa</button>
+            <button class="loc-btn" data-lon="144.8" data-lat="13.5" data-alt="2200000">Guam</button>
+            <button class="loc-btn" data-lon="145.7" data-lat="15.2" data-alt="2300000">CNMI</button>
+            <button class="loc-btn" data-lon="127.7" data-lat="26.4" data-alt="2400000">Okinawa + S. Kagoshima</button>
+
+            <div class="card">
+              <h3 style="margin-top:0">Important</h3>
+              <p class="hint" style="margin-top:.4rem">
+                The included <code>/assets/data/*.geojson</code> files in this download are <b>placeholders</b>.
+                Replace them with official EEZ GeoJSON exports (see instructions below) to get accurate outlines.
+              </p>
+              <ul style="margin:.4rem 0 0;padding-left:1.1rem" class="hint">
+                <li><code>/assets/data/eez_us_pacific.geojson</code></li>
+                <li><code>/assets/data/eez_okinawa_kagoshima.geojson</code></li>
+              </ul>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <div class="inner">
+        <div class="section-head">
+          <h2>How to replace placeholders with official EEZs</h2>
+          <p>Fast path using Marine Regions WFS.</p>
         </div>
 
         <div class="two-col">
-          <div>
-            <p class="lead" style="margin-top:0">
-              This page uses <strong>NASA Web WorldWind</strong>. Click a location pin to see details and follow a link.
-              You can later replace the placeholder region links (e.g., <span class="pill">/areas/hawaii/</span>) with real pages.
+          <div class="card">
+            <h3>1) Download EEZ polygons (GeoJSON)</h3>
+            <p class="hint">
+              Marine Regions documents their WFS endpoint and how to filter by <code>mrgid</code> in
+              their web services documentation. Use a WFS <code>GetFeature</code> request with
+              <code>outputFormat=application/json</code>.
             </p>
-
-            <div class="mini-grid">
-              <div class="mini">
-                <h3>How to use</h3>
-                <p>Drag to navigate, scroll to zoom. Click pins to open region details.</p>
-              </div>
-              <div class="mini">
-                <h3>Customize later</h3>
-                <p>Add more islands/regions by duplicating the location objects in the script.</p>
-              </div>
-            </div>
+            <pre style="white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);padding:.75rem;border-radius:14px;color:#eaf6ff">
+# Example pattern (edit mrgid, typeNames, etc.)
+https://geo.vliz.be/geoserver/MarineRegions/wfs?
+  service=WFS&version=1.0.0&request=GetFeature&
+  typeNames=eez&cql_filter=mrgid=8487&
+  outputFormat=application/json
+</pre>
           </div>
 
           <div class="card">
-            <h3>Current locations</h3>
-            <ul>
-              <li>Hawaiʻi</li>
-              <li>American Samoa</li>
-              <li>Guam</li>
-              <li>CNMI</li>
-              <li>Okinawa (Ryukyus)</li>
-            </ul>
+            <h3>2) Clip Japan EEZ to Okinawa + S. Kagoshima</h3>
+            <p class="hint">
+              In GIS (QGIS/ArcGIS) or Python (GeoPandas), clip the Japan EEZ polygon using a bounding box
+              that covers the Ryukyu + Amami chain, then export to GeoJSON as <code>eez_okinawa_kagoshima.geojson</code>.
+            </p>
+            <p class="hint">
+              Suggested clip box (edit as needed): <code>lon 121.5–133.5</code>, <code>lat 23.5–32.0</code>.
+            </p>
           </div>
         </div>
-
-        <div class="ww-wrap">
-          <div class="ww-panel">
-            <canvas id="wwdCanvas">
-              Your browser does not support HTML5 Canvas.
-            </canvas>
-
-            <div class="ww-controls" id="wwControls" aria-label="Quick jump controls"></div>
-
-            <div class="ww-info" aria-live="polite">
-              <h3 id="infoTitle">Click a location</h3>
-              <p id="infoBody">Select a pin to view region notes and open a link for more details.</p>
-              <div class="meta">
-                <span class="chip" id="infoChip">Pacific coverage</span>
-                <span class="chip"><a id="infoLink" href="/about/#contact">Contact for details</a></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
     <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
   </footer>
 
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      if (!window.WorldWind) return;
+<script>
+(function(){
+  const wwd = new WorldWind.WorldWindow("wwd");
 
-      const wwd = new WorldWind.WorldWindow("wwdCanvas");
+  // Base layers (simple + clean)
+  const layers = [
+    { layer: new WorldWind.BMNGLayer(), enabled: true },
+    { layer: new WorldWind.BMNGLandsatLayer(), enabled: false },
+    { layer: new WorldWind.CoordinatesDisplayLayer(wwd), enabled: true },
+    { layer: new WorldWind.ViewControlsLayer(wwd), enabled: true }
+  ];
+  layers.forEach(x => { x.layer.enabled = x.enabled; wwd.addLayer(x.layer); });
 
-      // Base imagery layers
-      wwd.addLayer(new WorldWind.BMNGOneImageLayer());   // Blue Marble (single image)
-      wwd.addLayer(new WorldWind.BMNGLandsatLayer());    // Landsat tiles
+  // Renderable layer for EEZ polygons
+  const eezLayer = new WorldWind.RenderableLayer("EEZ Outlines");
+  wwd.addLayer(eezLayer);
 
-      // UI layers
-      wwd.addLayer(new WorldWind.CompassLayer());
-      wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
-      wwd.addLayer(new WorldWind.ViewControlsLayer(wwd));
+  function polygonFromGeoJSONRing(ring){
+    // ring: [[lon,lat],...]
+    const boundary = ring.map(pt => new WorldWind.Location(pt[1], pt[0]));
+    const poly = new WorldWind.SurfacePolygon(boundary);
+    const attrs = new WorldWind.ShapeAttributes(null);
 
-      // Placemark layer
-      const pinLayer = new WorldWind.RenderableLayer("Service Locations");
-      wwd.addLayer(pinLayer);
+    // Thin yellow outline; transparent fill
+    attrs.outlineColor = WorldWind.Color.YELLOW;
+    attrs.outlineWidth = 1.5;
+    attrs.interiorColor = new WorldWind.Color(1,1,0,0.06);
+    poly.attributes = attrs;
 
-      const locations = [
-        {
-          id: "hawaii",
-          name: "Hawaiʻi",
-          lat: 21.3069,
-          lon: -157.8583,
-          chip: "Central Pacific",
-          desc: "Monitoring, impact assessment, and decision-ready reporting across the Hawaiian Archipelago.",
-          link: "/areas/hawaii/"
-        },
-        {
-          id: "american-samoa",
-          name: "American Samoa",
-          lat: -14.2756,
-          lon: -170.7020,
-          chip: "Polynesia",
-          desc: "Shallow + mesophotic reef assessments and long-term monitoring support.",
-          link: "/areas/american-samoa/"
-        },
-        {
-          id: "guam",
-          name: "Guam",
-          lat: 13.4443,
-          lon: 144.7937,
-          chip: "Micronesia",
-          desc: "Survey design, field support, and analysis/reporting for reef monitoring programs.",
-          link: "/areas/guam/"
-        },
-        {
-          id: "cnmi",
-          name: "CNMI",
-          lat: 15.0979,
-          lon: 145.6739,
-          chip: "Micronesia",
-          desc: "Program support for coral reef monitoring and assessment across the Northern Mariana Islands.",
-          link: "/areas/cnmi/"
-        },
-        {
-          id: "okinawa",
-          name: "Okinawa (Ryukyus)",
-          lat: 26.2124,
-          lon: 127.6809,
-          chip: "Japan",
-          desc: "Monitoring and outbreak/disease support across the Ryukyu Archipelago.",
-          link: "/areas/okinawa/"
-        }
-      ];
+    return poly;
+  }
 
-      function makePlacemark(loc){
-        const position = new WorldWind.Position(loc.lat, loc.lon, 0);
+  async function loadGeoJSON(url){
+    const res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error("Failed to load " + url + " (" + res.status + ")");
+    return await res.json();
+  }
 
-        const attrs = new WorldWind.PlacemarkAttributes(null);
-        attrs.imageScale = 1.15;
-        attrs.imageOffset = new WorldWind.Offset(
-          WorldWind.OFFSET_FRACTION, 0.5,
-          WorldWind.OFFSET_FRACTION, 0.0
-        );
-        attrs.labelAttributes.color = WorldWind.Color.WHITE;
-        attrs.labelAttributes.offset = new WorldWind.Offset(
-          WorldWind.OFFSET_FRACTION, 0.5,
-          WorldWind.OFFSET_FRACTION, 1.2
-        );
-        attrs.labelAttributes.font = "14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+  function addFeature(feat){
+    if(!feat || !feat.geometry) return;
 
-        // Built-in pushpin icon (ships with WorldWind assets)
-        attrs.imageSource = WorldWind.configuration.baseUrl + "images/pushpins/plain-red.png";
+    const props = feat.properties || {};
+    const name = props.name || "EEZ";
 
-        const highlight = new WorldWind.PlacemarkAttributes(attrs);
-        highlight.imageScale = 1.35;
+    const g = feat.geometry;
 
-        const pm = new WorldWind.Placemark(position, true, attrs);
-        pm.altitudeMode = WorldWind.CLAMP_TO_GROUND;
-        pm.label = loc.name;
-        pm.highlightAttributes = highlight;
-        pm.userProperties = loc;
+    const addPoly = (coords) => {
+      // coords = [ring1, ring2, ...] we only use outer ring for now
+      const poly = polygonFromGeoJSONRing(coords[0]);
+      poly.userProperties = { name, props };
+      eezLayer.addRenderable(poly);
+    };
 
-        return pm;
-      }
+    if(g.type === "Polygon") addPoly(g.coordinates);
+    if(g.type === "MultiPolygon") g.coordinates.forEach(addPoly);
+  }
 
-      const placemarks = locations.map(makePlacemark);
-      placemarks.forEach(pm => pinLayer.addRenderable(pm));
-      wwd.redraw();
+  // Click picking: click polygon -> show simple info
+  const picker = new WorldWind.PickedObjectList();
+  wwd.addEventListener("click", function(e){
+    const pickList = wwd.pick(wwd.canvasCoordinates(e.clientX, e.clientY));
+    if(!pickList || pickList.objects.length === 0) return;
 
-      // Pacific-facing start view
-      wwd.navigator.lookAtLocation.latitude = 10;
-      wwd.navigator.lookAtLocation.longitude = -160;
-      wwd.navigator.range = 12000000;
-      wwd.redraw();
+    const hit = pickList.objects.find(o => o.userObject && o.userObject.userProperties);
+    if(!hit) return;
 
-      // Info panel
-      const infoTitle = document.getElementById("infoTitle");
-      const infoBody  = document.getElementById("infoBody");
-      const infoLink  = document.getElementById("infoLink");
-      const infoChip  = document.getElementById("infoChip");
+    const info = hit.userObject.userProperties;
+    const msg = info.name + "\n\n" + Object.entries(info.props).map(([k,v]) => `${k}: ${v}`).join("\n");
+    alert(msg);
+  });
 
-      function setInfo(loc){
-        infoTitle.textContent = loc.name;
-        infoBody.textContent  = loc.desc;
-        infoChip.textContent  = loc.chip || "Pacific coverage";
-        infoLink.textContent  = "Learn more";
-        infoLink.href         = loc.link || "/about/#contact";
-      }
-
-      // Picking: clickable pins
-      const canvas = wwd.canvas;
-      canvas.addEventListener("click", (event) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        const pickList = wwd.pick(wwd.canvasCoordinates(x, y));
-
-        placemarks.forEach(pm => pm.highlighted = false);
-
-        if (pickList && pickList.objects && pickList.objects.length){
-          const picked = pickList.objects.find(o => o.userObject instanceof WorldWind.Placemark);
-          if (picked){
-            const pm = picked.userObject;
-            pm.highlighted = true;
-            wwd.redraw();
-            if (pm.userProperties) setInfo(pm.userProperties);
-          }
-        }
-      });
-
-      // Quick-jump controls
-      const controls = document.getElementById("wwControls");
-      function goTo(loc){
-        wwd.goTo(new WorldWind.Location(loc.lat, loc.lon));
-        setInfo(loc);
-      }
-      function mkBtn(loc){
-        const b = document.createElement("button");
-        b.type = "button";
-        b.textContent = loc.name;
-        b.addEventListener("click", () => goTo(loc));
-        return b;
-      }
-
-      ["Hawaiʻi","Okinawa (Ryukyus)","Guam","CNMI","American Samoa"].forEach((name) => {
-        const loc = locations.find(l => l.name === name);
-        if (loc) controls.appendChild(mkBtn(loc));
-      });
+  // Fly-to buttons
+  document.querySelectorAll(".loc-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lon = parseFloat(btn.dataset.lon);
+      const lat = parseFloat(btn.dataset.lat);
+      const alt = parseFloat(btn.dataset.alt || "2500000");
+      wwd.goTo(new WorldWind.Position(lat, lon, alt));
     });
-  </script>
+  });
+
+  // Load EEZ GeoJSONs (placeholders shipped; replace with official files)
+  Promise.all([
+    loadGeoJSON("/assets/data/eez_us_pacific.geojson"),
+    loadGeoJSON("/assets/data/eez_okinawa_kagoshima.geojson")
+  ]).then(([us, jp]) => {
+    (us.features || []).forEach(addFeature);
+    (jp.features || []).forEach(addFeature);
+    wwd.redraw();
+  }).catch(err => {
+    console.warn(err);
+    alert("EEZ layers failed to load. Check /assets/data paths and file names.\n\n" + err.message);
+  });
+
+})();
+</script>
+
 </body>
 </html>
