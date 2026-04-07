@@ -4,23 +4,132 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pacific Coral Research Services · Map</title>
-  <meta name="description" content="Interactive service coverage map" />
+  <meta name="description" content="Interactive Pacific service coverage map." />
   <link rel="stylesheet" href="/assets/css/style.css" />
   <script src="/assets/js/site.js" defer></script>
 
-  <!-- NASA WorldWind (Web) -->
-  <script src="https://worldwind.arc.nasa.gov/web/worldwind.min.js"></script>
-
   <style>
-    /* Minimal page-specific overrides */
-    .map-shell{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:1.1rem;align-items:stretch}
-    .map-wrap{min-height:62vh;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18)}
-    #wwd{width:100%;height:100%;display:block}
+    .map-shell{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 340px;
+      gap:1.1rem;
+      align-items:start;
+    }
+    .map-wrap{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(3,11,20,.86);
+      box-shadow:var(--shadow);
+    }
+    .map-topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      padding:.8rem 1rem;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.15);
+    }
+    .map-note{
+      color:var(--muted);
+      font-size:.84rem;
+      line-height:1.45;
+    }
+    .map-svg{
+      display:block;
+      width:100%;
+      height:auto;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(70,130,180,.18), transparent 45%),
+        linear-gradient(180deg, rgba(5,20,35,1) 0%, rgba(2,10,18,1) 100%);
+    }
+    .gridline{
+      stroke:rgba(255,255,255,.10);
+      stroke-width:1;
+      stroke-dasharray:5 7;
+    }
+    .region{
+      fill:rgba(255,255,0,.05);
+      stroke:rgba(255,230,80,.95);
+      stroke-width:2;
+      cursor:pointer;
+      transition:fill .15s ease, stroke-width .15s ease, filter .15s ease;
+    }
+    .region:hover,
+    .region.active{
+      fill:rgba(255,255,0,.12);
+      stroke-width:3;
+      filter:drop-shadow(0 0 7px rgba(255,230,80,.35));
+    }
+    .region-label{
+      fill:#f6fbff;
+      font-size:16px;
+      font-weight:600;
+      letter-spacing:.02em;
+      paint-order:stroke;
+      stroke:rgba(3,11,20,.95);
+      stroke-width:4px;
+      stroke-linejoin:round;
+    }
+    .region-sub{
+      fill:#d7ecff;
+      font-size:13px;
+      paint-order:stroke;
+      stroke:rgba(3,11,20,.95);
+      stroke-width:4px;
+      stroke-linejoin:round;
+    }
+    .land{
+      fill:rgba(220,245,255,.18);
+      stroke:rgba(220,245,255,.22);
+      stroke-width:1;
+    }
     .map-side{display:flex;flex-direction:column;gap:.9rem}
-    .loc-btn{width:100%;text-align:left;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(3,11,20,.86);color:inherit;padding:.85rem .95rem;cursor:pointer}
-    .loc-btn:hover{border-color:rgba(124,236,255,.32);box-shadow:0 18px 44px rgba(0,0,0,.55)}
+    .loc-btn{
+      width:100%;
+      text-align:left;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(3,11,20,.86);
+      color:inherit;
+      padding:.85rem .95rem;
+      cursor:pointer;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .loc-btn:hover,
+    .loc-btn.active{
+      transform:translateY(-2px);
+      border-color:rgba(124,236,255,.32);
+      box-shadow:0 18px 44px rgba(0,0,0,.55);
+    }
     .hint{color:var(--muted);font-size:.88rem;line-height:1.55}
-    @media (max-width: 980px){.map-shell{grid-template-columns:1fr}.map-wrap{min-height:55vh}}
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.55rem;
+      margin-top:.55rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.2rem .65rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,8,16,.55);
+      color:var(--muted);
+      font-size:.78rem;
+    }
+    .chip-swatch{
+      width:12px;height:12px;border-radius:999px;
+      border:2px solid rgba(255,230,80,.95);
+      background:rgba(255,255,0,.08);
+      flex:0 0 auto;
+    }
+    @media (max-width: 980px){
+      .map-shell{grid-template-columns:1fr}
+    }
   </style>
 </head>
 
@@ -46,190 +155,177 @@
   </header>
 
   <main class="wrap">
-
     <section class="panel section">
       <div class="inner">
         <div class="section-head">
           <h2>Service coverage map</h2>
-          <p>Clickable EEZ outlines (yellow) + quick navigation.</p>
+          <p>Clickable Pacific and Okinawa service areas in a format that works immediately.</p>
         </div>
 
         <div class="map-shell">
           <div class="map-wrap">
-            <canvas id="wwd" aria-label="WorldWind map"></canvas>
+            <div class="map-topbar">
+              <div class="map-note">
+                This version uses <strong>approximate service-area / EEZ-style outlines</strong> so the page works cleanly without external map dependencies.
+                Later, these outlines can be swapped for official EEZ GeoJSON if you want legal/authoritative boundaries.
+              </div>
+              <div class="legend">
+                <span class="chip"><span class="chip-swatch"></span>Clickable outline</span>
+              </div>
+            </div>
+
+            <svg id="pacificMap" class="map-svg" viewBox="0 0 1200 680" aria-label="Pacific service map">
+              <g opacity="1">
+                <line class="gridline" x1="150" y1="80" x2="150" y2="620"></line>
+                <line class="gridline" x1="300" y1="80" x2="300" y2="620"></line>
+                <line class="gridline" x1="450" y1="80" x2="450" y2="620"></line>
+                <line class="gridline" x1="600" y1="80" x2="600" y2="620"></line>
+                <line class="gridline" x1="750" y1="80" x2="750" y2="620"></line>
+                <line class="gridline" x1="900" y1="80" x2="900" y2="620"></line>
+                <line class="gridline" x1="1050" y1="80" x2="1050" y2="620"></line>
+
+                <line class="gridline" x1="70" y1="120" x2="1130" y2="120"></line>
+                <line class="gridline" x1="70" y1="220" x2="1130" y2="220"></line>
+                <line class="gridline" x1="70" y1="320" x2="1130" y2="320"></line>
+                <line class="gridline" x1="70" y1="420" x2="1130" y2="420"></line>
+                <line class="gridline" x1="70" y1="520" x2="1130" y2="520"></line>
+              </g>
+
+              <g>
+                <ellipse class="land" cx="1060" cy="215" rx="48" ry="78"></ellipse>
+                <ellipse class="land" cx="1110" cy="250" rx="18" ry="26"></ellipse>
+                <ellipse class="land" cx="980" cy="500" rx="70" ry="36"></ellipse>
+                <ellipse class="land" cx="560" cy="470" rx="10" ry="8"></ellipse>
+                <ellipse class="land" cx="610" cy="515" rx="8" ry="6"></ellipse>
+                <ellipse class="land" cx="205" cy="475" rx="10" ry="8"></ellipse>
+                <ellipse class="land" cx="895" cy="405" rx="10" ry="8"></ellipse>
+                <ellipse class="land" cx="930" cy="382" rx="8" ry="6"></ellipse>
+              </g>
+
+              <g id="regions">
+                <polygon id="region-pacific" class="region"
+                  points="80,140 280,90 540,100 790,120 1010,165 1090,260 1040,405 905,525 675,565 430,560 220,520 95,420 60,275"
+                  data-name="Pacific service region"
+                  data-desc="Broad Pacific service envelope used as a working regional overview on this map page."
+                  data-link="/about/#contact"></polygon>
+
+                <polygon id="region-hawaii" class="region"
+                  points="515,445 535,438 560,442 578,456 572,474 548,482 522,476 508,460"
+                  data-name="Hawaiʻi"
+                  data-desc="Approximate Hawaiʻi service-area outline for clickable navigation and future region-specific content."
+                  data-link="/areas/hawaii/"></polygon>
+
+                <polygon id="region-american-samoa" class="region"
+                  points="182,470 198,462 216,466 225,482 214,495 195,498 178,488 173,476"
+                  data-name="American Samoa"
+                  data-desc="Approximate American Samoa service-area outline. Ready to link to region-specific project details later."
+                  data-link="/areas/american-samoa/"></polygon>
+
+                <polygon id="region-guam" class="region"
+                  points="868,392 884,382 900,386 907,401 897,416 879,419 866,407 862,398"
+                  data-name="Guam"
+                  data-desc="Approximate Guam service-area outline for clickable map interaction."
+                  data-link="/areas/guam/"></polygon>
+
+                <polygon id="region-cnmi" class="region"
+                  points="905,352 925,340 948,345 959,364 949,384 927,392 905,385 892,366"
+                  data-name="CNMI"
+                  data-desc="Approximate CNMI service-area outline for clickable map interaction."
+                  data-link="/areas/cnmi/"></polygon>
+
+                <polygon id="region-okinawa" class="region"
+                  points="1012,176 1040,158 1075,162 1100,184 1104,214 1086,240 1048,248 1018,234 1001,206"
+                  data-name="Okinawa + southern Kagoshima"
+                  data-desc="Approximate Okinawa / southern Kagoshima service-area outline, styled to match the rest of the site."
+                  data-link="/areas/okinawa/"></polygon>
+              </g>
+
+              <text class="region-label" x="560" y="436">Hawaiʻi</text>
+              <text class="region-label" x="132" y="458">American Samoa</text>
+              <text class="region-label" x="842" y="380">Guam</text>
+              <text class="region-label" x="883" y="335">CNMI</text>
+              <text class="region-label" x="992" y="150">Okinawa</text>
+              <text class="region-sub" x="982" y="168">+ southern Kagoshima</text>
+              <text class="region-label" x="375" y="160">Pacific service region</text>
+            </svg>
           </div>
 
           <aside class="map-side">
             <div class="card">
               <h3 style="margin-top:0">Quick locations</h3>
-              <p class="hint" style="margin-top:.4rem">
-                Use the buttons to fly the camera, or click an EEZ outline to open details.
+              <p class="hint" style="margin-top:.35rem">
+                Click a button or a yellow outline to update the region panel.
               </p>
+              <div style="display:grid;gap:.65rem;margin-top:.65rem">
+                <button class="loc-btn" data-region="region-pacific">Pacific region</button>
+                <button class="loc-btn" data-region="region-hawaii">Hawaiʻi</button>
+                <button class="loc-btn" data-region="region-american-samoa">American Samoa</button>
+                <button class="loc-btn" data-region="region-guam">Guam</button>
+                <button class="loc-btn" data-region="region-cnmi">CNMI</button>
+                <button class="loc-btn" data-region="region-okinawa">Okinawa + southern Kagoshima</button>
+              </div>
             </div>
-
-            <button class="loc-btn" data-lon="-157.8" data-lat="21.3" data-alt="2200000">Hawaiʻi</button>
-            <button class="loc-btn" data-lon="-170.7" data-lat="-14.3" data-alt="2600000">American Samoa</button>
-            <button class="loc-btn" data-lon="144.8" data-lat="13.5" data-alt="2200000">Guam</button>
-            <button class="loc-btn" data-lon="145.7" data-lat="15.2" data-alt="2300000">CNMI</button>
-            <button class="loc-btn" data-lon="127.7" data-lat="26.4" data-alt="2400000">Okinawa + S. Kagoshima</button>
 
             <div class="card">
-              <h3 style="margin-top:0">Important</h3>
-              <p class="hint" style="margin-top:.4rem">
-                The included <code>/assets/data/*.geojson</code> files in this download are <b>placeholders</b>.
-                Replace them with official EEZ GeoJSON exports (see instructions below) to get accurate outlines.
+              <h3 id="infoTitle" style="margin-top:0">Pacific service region</h3>
+              <p id="infoBody" class="hint" style="margin-top:.35rem">
+                Broad Pacific service envelope used as a working regional overview on this map page.
               </p>
-              <ul style="margin:.4rem 0 0;padding-left:1.1rem" class="hint">
-                <li><code>/assets/data/eez_us_pacific.geojson</code></li>
-                <li><code>/assets/data/eez_okinawa_kagoshima.geojson</code></li>
-              </ul>
+              <a id="infoLink" class="btn outline" href="/about/#contact" style="margin-top:.65rem;display:inline-flex">
+                Learn more
+              </a>
             </div>
 
+            <div class="card">
+              <h3 style="margin-top:0">Notes</h3>
+              <p class="hint" style="margin-top:.35rem">
+                This file is designed to work immediately with your current site format and assets.
+                If you later want legally accurate EEZ boundaries, these clickable outlines can be replaced with official GeoJSON polygons.
+              </p>
+              <p class="hint" style="margin-top:.55rem">
+                That future upgrade can still preserve this same right-side control panel and overall layout.
+              </p>
+            </div>
           </aside>
         </div>
       </div>
     </section>
-
-    <section class="panel section">
-      <div class="inner">
-        <div class="section-head">
-          <h2>How to replace placeholders with official EEZs</h2>
-          <p>Fast path using Marine Regions WFS.</p>
-        </div>
-
-        <div class="two-col">
-          <div class="card">
-            <h3>1) Download EEZ polygons (GeoJSON)</h3>
-            <p class="hint">
-              Marine Regions documents their WFS endpoint and how to filter by <code>mrgid</code> in
-              their web services documentation. Use a WFS <code>GetFeature</code> request with
-              <code>outputFormat=application/json</code>.
-            </p>
-            <pre style="white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);padding:.75rem;border-radius:14px;color:#eaf6ff">
-# Example pattern (edit mrgid, typeNames, etc.)
-https://geo.vliz.be/geoserver/MarineRegions/wfs?
-  service=WFS&version=1.0.0&request=GetFeature&
-  typeNames=eez&cql_filter=mrgid=8487&
-  outputFormat=application/json
-</pre>
-          </div>
-
-          <div class="card">
-            <h3>2) Clip Japan EEZ to Okinawa + S. Kagoshima</h3>
-            <p class="hint">
-              In GIS (QGIS/ArcGIS) or Python (GeoPandas), clip the Japan EEZ polygon using a bounding box
-              that covers the Ryukyu + Amami chain, then export to GeoJSON as <code>eez_okinawa_kagoshima.geojson</code>.
-            </p>
-            <p class="hint">
-              Suggested clip box (edit as needed): <code>lon 121.5–133.5</code>, <code>lat 23.5–32.0</code>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer class="footer">
     <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
   </footer>
 
-<script>
-(function(){
-  const wwd = new WorldWind.WorldWindow("wwd");
+  <script>
+    (function(){
+      const regions = Array.from(document.querySelectorAll(".region"));
+      const buttons = Array.from(document.querySelectorAll(".loc-btn"));
+      const titleEl = document.getElementById("infoTitle");
+      const bodyEl  = document.getElementById("infoBody");
+      const linkEl  = document.getElementById("infoLink");
 
-  // Base layers (simple + clean)
-  const layers = [
-    { layer: new WorldWind.BMNGLayer(), enabled: true },
-    { layer: new WorldWind.BMNGLandsatLayer(), enabled: false },
-    { layer: new WorldWind.CoordinatesDisplayLayer(wwd), enabled: true },
-    { layer: new WorldWind.ViewControlsLayer(wwd), enabled: true }
-  ];
-  layers.forEach(x => { x.layer.enabled = x.enabled; wwd.addLayer(x.layer); });
+      function setActive(regionId){
+        regions.forEach(el => el.classList.toggle("active", el.id === regionId));
+        buttons.forEach(btn => btn.classList.toggle("active", btn.dataset.region === regionId));
 
-  // Renderable layer for EEZ polygons
-  const eezLayer = new WorldWind.RenderableLayer("EEZ Outlines");
-  wwd.addLayer(eezLayer);
+        const el = document.getElementById(regionId);
+        if(!el) return;
 
-  function polygonFromGeoJSONRing(ring){
-    // ring: [[lon,lat],...]
-    const boundary = ring.map(pt => new WorldWind.Location(pt[1], pt[0]));
-    const poly = new WorldWind.SurfacePolygon(boundary);
-    const attrs = new WorldWind.ShapeAttributes(null);
+        titleEl.textContent = el.dataset.name || "Region";
+        bodyEl.textContent = el.dataset.desc || "";
+        linkEl.href = el.dataset.link || "/about/#contact";
+      }
 
-    // Thin yellow outline; transparent fill
-    attrs.outlineColor = WorldWind.Color.YELLOW;
-    attrs.outlineWidth = 1.5;
-    attrs.interiorColor = new WorldWind.Color(1,1,0,0.06);
-    poly.attributes = attrs;
+      regions.forEach(el => {
+        el.addEventListener("click", () => setActive(el.id));
+      });
 
-    return poly;
-  }
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => setActive(btn.dataset.region));
+      });
 
-  async function loadGeoJSON(url){
-    const res = await fetch(url, { cache: "no-store" });
-    if(!res.ok) throw new Error("Failed to load " + url + " (" + res.status + ")");
-    return await res.json();
-  }
-
-  function addFeature(feat){
-    if(!feat || !feat.geometry) return;
-
-    const props = feat.properties || {};
-    const name = props.name || "EEZ";
-
-    const g = feat.geometry;
-
-    const addPoly = (coords) => {
-      // coords = [ring1, ring2, ...] we only use outer ring for now
-      const poly = polygonFromGeoJSONRing(coords[0]);
-      poly.userProperties = { name, props };
-      eezLayer.addRenderable(poly);
-    };
-
-    if(g.type === "Polygon") addPoly(g.coordinates);
-    if(g.type === "MultiPolygon") g.coordinates.forEach(addPoly);
-  }
-
-  // Click picking: click polygon -> show simple info
-  const picker = new WorldWind.PickedObjectList();
-  wwd.addEventListener("click", function(e){
-    const pickList = wwd.pick(wwd.canvasCoordinates(e.clientX, e.clientY));
-    if(!pickList || pickList.objects.length === 0) return;
-
-    const hit = pickList.objects.find(o => o.userObject && o.userObject.userProperties);
-    if(!hit) return;
-
-    const info = hit.userObject.userProperties;
-    const msg = info.name + "\n\n" + Object.entries(info.props).map(([k,v]) => `${k}: ${v}`).join("\n");
-    alert(msg);
-  });
-
-  // Fly-to buttons
-  document.querySelectorAll(".loc-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const lon = parseFloat(btn.dataset.lon);
-      const lat = parseFloat(btn.dataset.lat);
-      const alt = parseFloat(btn.dataset.alt || "2500000");
-      wwd.goTo(new WorldWind.Position(lat, lon, alt));
-    });
-  });
-
-  // Load EEZ GeoJSONs (placeholders shipped; replace with official files)
-  Promise.all([
-    loadGeoJSON("/assets/data/eez_us_pacific.geojson"),
-    loadGeoJSON("/assets/data/eez_okinawa_kagoshima.geojson")
-  ]).then(([us, jp]) => {
-    (us.features || []).forEach(addFeature);
-    (jp.features || []).forEach(addFeature);
-    wwd.redraw();
-  }).catch(err => {
-    console.warn(err);
-    alert("EEZ layers failed to load. Check /assets/data paths and file names.\n\n" + err.message);
-  });
-
-})();
-</script>
-
+      setActive("region-pacific");
+    })();
+  </script>
 </body>
 </html>
