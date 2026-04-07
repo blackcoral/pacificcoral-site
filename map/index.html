@@ -1,67 +1,428 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pacific Coral Research Services · Map</title>
+  <meta name="description" content="Interactive Pacific service coverage map." />
 
-<link rel="stylesheet" href="/assets/css/style.css"/>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script src="/assets/js/site.js" defer></script>
 
-<style>
-#map{width:100%;height:600px;}
-.region{fill:rgba(255,255,0,.05);stroke:yellow;stroke-width:2;cursor:pointer;}
-.region:hover{fill:rgba(255,255,0,.15);}
-.land{fill:#ccc;}
-</style>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+  <style>
+    .map-shell{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 340px;
+      gap:1.1rem;
+      align-items:start;
+    }
+    .map-wrap{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(3,11,20,.86);
+      box-shadow:var(--shadow);
+    }
+    .map-topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      padding:.8rem 1rem;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.15);
+    }
+    .map-note{
+      color:var(--muted);
+      font-size:.84rem;
+      line-height:1.45;
+    }
+    .map-svg{
+      display:block;
+      width:100%;
+      height:auto;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(70,130,180,.14), transparent 50%),
+        linear-gradient(180deg, rgba(6,20,36,1) 0%, rgba(2,10,18,1) 100%);
+    }
+    .sphere{
+      fill:none;
+      stroke:rgba(255,255,255,.12);
+      stroke-width:1.2;
+    }
+    .graticule{
+      fill:none;
+      stroke:rgba(255,255,255,.08);
+      stroke-width:1;
+      stroke-dasharray:5 7;
+    }
+    .land{
+      fill:rgba(220,245,255,.16);
+      stroke:rgba(220,245,255,.18);
+      stroke-width:.7;
+    }
+    .eez{
+      fill:rgba(255,255,0,.06);
+      stroke:rgba(255,230,80,.95);
+      stroke-width:2;
+      cursor:pointer;
+      transition:fill .15s ease, stroke-width .15s ease, filter .15s ease, opacity .15s ease;
+    }
+    .eez:hover,
+    .eez.active{
+      fill:rgba(255,255,0,.14);
+      stroke-width:3;
+      filter:drop-shadow(0 0 8px rgba(255,230,80,.35));
+    }
+    .region-label{
+      fill:#f6fbff;
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:.02em;
+      paint-order:stroke;
+      stroke:rgba(3,11,20,.95);
+      stroke-width:4px;
+      stroke-linejoin:round;
+      pointer-events:none;
+    }
+    .map-side{
+      display:flex;
+      flex-direction:column;
+      gap:.9rem;
+    }
+    .loc-btn{
+      width:100%;
+      text-align:left;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(3,11,20,.86);
+      color:inherit;
+      padding:.85rem .95rem;
+      cursor:pointer;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .loc-btn:hover,
+    .loc-btn.active{
+      transform:translateY(-2px);
+      border-color:rgba(124,236,255,.32);
+      box-shadow:0 18px 44px rgba(0,0,0,.55);
+    }
+    .hint{
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.55;
+    }
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.55rem;
+      margin-top:.55rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.2rem .65rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,8,16,.55);
+      color:var(--muted);
+      font-size:.78rem;
+    }
+    .chip-swatch{
+      width:12px;height:12px;border-radius:999px;
+      border:2px solid rgba(255,230,80,.95);
+      background:rgba(255,255,0,.08);
+      flex:0 0 auto;
+    }
+    .status{
+      padding:.65rem .8rem;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.25);
+      color:var(--muted);
+      margin-top:.65rem;
+      white-space:pre-line;
+    }
+    .status.ok{border-color:rgba(124,236,255,.28)}
+    .status.bad{border-color:rgba(255,180,0,.35)}
+    .info-link{
+      display:inline-flex;
+      margin-top:.65rem;
+    }
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    @media (max-width:980px){
+      .map-shell{grid-template-columns:1fr}
+    }
+  </style>
 </head>
-
 <body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="/assets/img/logo.jpg" alt="Pacific Coral Research Services logo" />
+        <div>
+          <div class="title">Pacific Coral Research Services</div>
+          <div class="sub">Science-based coral reef consulting across the Pacific</div>
+        </div>
+      </div>
+      <button class="menu-btn" type="button" aria-label="Toggle navigation">Menu</button>
+      <nav class="nav collapsed" aria-label="Primary">
+        <a href="/" data-path="/">Home</a>
+        <a href="/services/" data-path="/services">Services</a>
+        <a href="/about/" data-path="/about">About</a>
+        <a href="/map/" data-path="/map">Map</a>
+        <a href="/research/" data-path="/research">Research</a>
+      </nav>
+    </div>
+  </header>
 
-<h2 style="padding:10px;">Pacific Map</h2>
-<svg id="map" viewBox="0 0 1000 600"></svg>
+  <main class="wrap">
+    <section class="panel section">
+      <div class="inner">
+        <div class="section-head">
+          <h2>Service coverage map</h2>
+          <p>Loads region-specific EEZ GeoJSON files and links each region to its own detailed page.</p>
+        </div>
 
-<script>
+        <div class="map-shell">
+          <div class="map-wrap">
+            <div class="map-topbar">
+              <div class="map-note">
+                This version reads separate GeoJSON files for Hawaiʻi, American Samoa, Guam, CNMI, and Okinawa + southern Kagoshima.
+                Click an outline or the right-side buttons to focus a region and open the matching detail link.
+              </div>
+              <div class="legend">
+                <span class="chip"><span class="chip-swatch"></span>Clickable EEZ outline</span>
+              </div>
+            </div>
 
-const svg = d3.select("#map");
+            <svg id="pacificMap" class="map-svg" viewBox="0 0 1200 680" aria-label="Pacific-centered map"></svg>
+          </div>
 
-const projection = d3.geoNaturalEarth1()
-  .rotate([160,0])
-  .fitSize([1000,600], {type:"Sphere"});
+          <aside class="map-side">
+            <div class="card">
+              <h3 style="margin-top:0">Quick locations</h3>
+              <p class="hint" style="margin-top:.35rem">
+                Each button highlights the matching EEZ and points to its detailed page.
+              </p>
+              <div style="display:grid;gap:.65rem;margin-top:.65rem">
+                <button class="loc-btn" data-region="hawaii">Hawaiʻi</button>
+                <button class="loc-btn" data-region="american_samoa">American Samoa</button>
+                <button class="loc-btn" data-region="guam">Guam</button>
+                <button class="loc-btn" data-region="cnmi">CNMI</button>
+                <button class="loc-btn" data-region="okinawa">Okinawa + southern Kagoshima</button>
+              </div>
+              <div id="mapStatus" class="status">Loading map layers…</div>
+            </div>
 
-const path = d3.geoPath(projection);
+            <div class="card">
+              <h3 id="infoTitle" style="margin-top:0">Select a region</h3>
+              <p id="infoBody" class="hint" style="margin-top:.35rem">
+                Click a yellow outline or one of the buttons to focus a region.
+              </p>
+              <a id="infoLink" class="btn outline info-link" href="/about/#contact">Open detail page</a>
+            </div>
 
-Promise.all([
-  d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"),
-  d3.json("/assets/data/eez_us_pacific.geojson"),
-  d3.json("/assets/data/eez_okinawa_kagoshima.geojson")
-]).then(([world, us, ok]) => {
+            <div class="card">
+              <h3 style="margin-top:0">Files expected</h3>
+              <ul class="hint" style="margin:.45rem 0 0; padding-left:1.1rem;">
+                <li><code>/assets/data/eez_hawaii_us.geojson</code></li>
+                <li><code>/assets/data/eez_american_samoa.geojson</code></li>
+                <li><code>/assets/data/eez_guam.geojson</code></li>
+                <li><code>/assets/data/eez_cnmi.geojson</code></li>
+                <li><code>/assets/data/eez_okinawa_kagoshima.geojson</code></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  const land = topojson.feature(world, world.objects.countries);
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
+  </footer>
 
-  svg.append("g")
-    .selectAll("path")
-    .data(land.features)
-    .join("path")
-    .attr("class","land")
-    .attr("d",path);
+  <script>
+    (function(){
+      const svg = d3.select("#pacificMap");
+      const statusEl = document.getElementById("mapStatus");
+      const titleEl = document.getElementById("infoTitle");
+      const bodyEl  = document.getElementById("infoBody");
+      const linkEl  = document.getElementById("infoLink");
+      const buttons = Array.from(document.querySelectorAll(".loc-btn"));
 
-  const eez = [...(us.features||[]), ...(ok.features||[])];
+      const projection = d3.geoNaturalEarth1()
+        .rotate([160, 0])
+        .fitExtent([[40, 40], [1160, 640]], {type:"Sphere"});
 
-  svg.append("g")
-    .selectAll("path")
-    .data(eez)
-    .join("path")
-    .attr("class","region")
-    .attr("d",path)
-    .on("click",(e,d)=>{
-      alert(d.properties?.name || "EEZ");
-    });
+      const path = d3.geoPath(projection);
 
-});
+      svg.append("path")
+        .datum({type:"Sphere"})
+        .attr("class", "sphere")
+        .attr("d", path);
 
-</script>
+      svg.append("path")
+        .datum(d3.geoGraticule10())
+        .attr("class", "graticule")
+        .attr("d", path);
 
+      const REGIONS = {
+        hawaii: {
+          id: "hawaii",
+          name: "Hawaiʻi",
+          desc: "Detailed EEZ map for Hawaiʻi.",
+          link: "/hawaii/",
+          labelPoint: [-161, 24],
+          file: "/assets/data/eez_hawaii_us.geojson"
+        },
+        american_samoa: {
+          id: "american_samoa",
+          name: "American Samoa",
+          desc: "Detailed EEZ map for American Samoa.",
+          link: "/american-samoa/",
+          labelPoint: [-177, -10],
+          file: "/assets/data/eez_american_samoa.geojson"
+        },
+        guam: {
+          id: "guam",
+          name: "Guam",
+          desc: "Detailed EEZ map for Guam.",
+          link: "/guam/",
+          labelPoint: [140.7, 16.0],
+          file: "/assets/data/eez_guam.geojson"
+        },
+        cnmi: {
+          id: "cnmi",
+          name: "CNMI",
+          desc: "Detailed EEZ map for CNMI.",
+          link: "/cnmi/",
+          labelPoint: [147.3, 20.2],
+          file: "/assets/data/eez_cnmi.geojson"
+        },
+        okinawa: {
+          id: "okinawa",
+          name: "Okinawa + southern Kagoshima",
+          desc: "Detailed EEZ map for Okinawa and southern Kagoshima.",
+          link: "/okinawa/",
+          labelPoint: [124.7, 33],
+          file: "/assets/data/eez_okinawa_kagoshima.geojson"
+        }
+      };
+
+      let rendered = [];
+
+      function setStatus(ok, msg){
+        statusEl.className = "status " + (ok ? "ok" : "bad");
+        statusEl.textContent = msg;
+      }
+
+      function setActive(regionId){
+        svg.selectAll(".eez").classed("active", d => d._regionId === regionId);
+        buttons.forEach(btn => btn.classList.toggle("active", btn.dataset.region === regionId));
+
+        const reg = REGIONS[regionId];
+        if(!reg) return;
+
+        titleEl.textContent = reg.name;
+        bodyEl.textContent = reg.desc;
+        linkEl.href = reg.link;
+
+        const features = rendered.filter(d => d._regionId === regionId);
+        if(features.length){
+          projection.fitExtent([[55, 55], [1145, 625]], {
+            type: "FeatureCollection",
+            features: features
+          });
+          redraw();
+        }
+      }
+
+      function redraw(){
+        svg.selectAll(".sphere").attr("d", path);
+        svg.selectAll(".graticule").attr("d", path);
+        svg.selectAll(".land").attr("d", path);
+        svg.selectAll(".eez").attr("d", path);
+        svg.selectAll(".region-label")
+          .attr("x", d => projection(d.labelPoint)?.[0] ?? -999)
+          .attr("y", d => projection(d.labelPoint)?.[1] ?? -999);
+      }
+
+      Promise.all([
+        d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"),
+        ...Object.values(REGIONS).map(r => d3.json(r.file).then(gj => ({ region: r.id, data: gj })).catch(err => ({ region: r.id, error: err })))
+      ]).then(([world, ...datasets]) => {
+        const countries = topojson.feature(world, world.objects.countries);
+
+        svg.append("g")
+          .selectAll("path")
+          .data(countries.features)
+          .join("path")
+          .attr("class", "land")
+          .attr("d", path);
+
+        const failures = [];
+        const empties = [];
+
+        datasets.forEach(item => {
+          const reg = REGIONS[item.region];
+          if(item.error){
+            failures.push(reg.name + " (load failed)");
+            return;
+          }
+          const feats = (item.data && item.data.features) || [];
+          if(!feats.length){
+            empties.push(reg.name);
+            return;
+          }
+          feats.forEach(f => {
+            f._regionId = reg.id;
+            rendered.push(f);
+          });
+        });
+
+        svg.append("g")
+          .selectAll("path")
+          .data(rendered)
+          .join("path")
+          .attr("class", "eez")
+          .attr("d", path)
+          .on("click", (event, d) => setActive(d._regionId));
+
+        svg.append("g")
+          .selectAll("text")
+          .data(Object.values(REGIONS))
+          .join("text")
+          .attr("class", "region-label")
+          .attr("x", d => projection(d.labelPoint)?.[0] ?? -999)
+          .attr("y", d => projection(d.labelPoint)?.[1] ?? -999)
+          .text(d => d.name);
+
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => setActive(btn.dataset.region));
+        });
+
+        if(!rendered.length){
+          setStatus(false, "No EEZ polygons rendered. Current files appear empty or failed to load.");
+          return;
+        }
+
+        let msg = "EEZ layers loaded successfully.";
+        if(empties.length) msg += "\nEmpty files: " + empties.join(", ");
+        if(failures.length) msg += "\nFailed files: " + failures.join(", ");
+        setStatus(true, msg);
+
+        setActive("hawaii");
+      }).catch(err => {
+        console.error(err);
+        setStatus(false, "Failed to load map or EEZ files. Check the file paths and browser console.");
+      });
+    })();
+  </script>
 </body>
 </html>
