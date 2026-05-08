@@ -86,8 +86,8 @@
           <p>Send a project inquiry. (This can later be wired to a real form handler.)</p>
         </div>
 
-        <!-- Simple mailto form (works without backend). For production, swap to a form service or Cloudflare Worker. -->
-        <form action="mailto:info@pacificcoral.org" method="post" enctype="text/plain">
+        <!-- Contact form fallback: opens a formatted email draft without using a broken mailto form POST. -->
+        <form id="contactForm" action="#" method="post">
           <div class="form">
             <div class="field">
               <label for="name">Name *</label>
@@ -112,9 +112,11 @@
           </div>
 
           <div class="actions" style="margin-top:1rem">
-            <button class="btn primary" type="submit">Send message</button>
+            <button class="btn primary" type="submit">Open email draft</button>
             <button class="btn outline" type="reset">Clear</button>
           </div>
+
+          <p id="contactStatus" class="lead" style="font-size:.88rem;margin-top:.85rem;display:none;"></p>
         </form>
       </div>
     </section>
@@ -123,5 +125,49 @@
   <footer class="footer">
     <span>&copy; <span id="year"></span> Pacific Coral Research Services</span>
   </footer>
+  <script>
+    (function(){
+      const form = document.getElementById("contactForm");
+      const status = document.getElementById("contactStatus");
+      if (!form) return;
+
+      form.addEventListener("submit", function(event){
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const org = document.getElementById("org").value.trim();
+        const region = document.getElementById("region").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !message) {
+          status.style.display = "block";
+          status.textContent = "Please complete the required fields: name, email, and project details.";
+          return;
+        }
+
+        const subject = "Project inquiry from " + name;
+
+        const body =
+          "Project inquiry from PacificCoral.org%0D%0D" +
+          "Name: " + encodeURIComponent(name) + "%0D" +
+          "Email: " + encodeURIComponent(email) + "%0D" +
+          "Organization: " + encodeURIComponent(org || "Not provided") + "%0D" +
+          "Region / Island group: " + encodeURIComponent(region || "Not provided") + "%0D%0D" +
+          "Project details:%0D" + encodeURIComponent(message);
+
+        const mailto =
+          "mailto:info@pacificcoral.org" +
+          "?subject=" + encodeURIComponent(subject) +
+          "&body=" + body;
+
+        status.style.display = "block";
+        status.textContent = "Your email app should open with a prepared message. If it does not open, email info@pacificcoral.org directly.";
+
+        window.location.href = mailto;
+      });
+    })();
+  </script>
+
 </body>
 </html>
