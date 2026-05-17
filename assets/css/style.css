@@ -146,8 +146,8 @@ body::after{
 }
 
 .lang-link img {
-  width: 24px !important;
-  height: 16px !important;
+  width: 18px !important;
+  height: 12px !important;
   object-fit: cover !important;
   border-radius: 0 !important;
   border: 1px solid rgba(255,255,255,.28);
@@ -291,17 +291,37 @@ h1{
 .card ul{margin:.45rem 0 0; padding-left:1.05rem}
 
 .mini-grid{
-  display:grid; grid-template-columns: 1fr 1fr; gap:.9rem;
+  display:inline-grid;
+  grid-template-columns:auto auto;
+  gap:.7rem;
+  width:fit-content;
 }
-@media (max-width:540px){ .mini-grid{grid-template-columns:1fr} }
+
+@media (max-width:540px){
+  .mini-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 .mini{
   border-radius:18px;
   border:1px solid rgba(255,255,255,.14);
   background: rgba(1,7,14,.88);
-  padding: .9rem .95rem;
+  padding:.65rem .8rem;
+  align-self:start;
 }
-.mini h3{margin:0 0 .35rem;font-size:.98rem}
-.mini p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.6}
+
+.mini h3{
+  margin:0 0 .25rem;
+  font-size:.95rem;
+}
+
+.mini p{
+  margin:0;
+  color:var(--muted);
+  font-size:.84rem;
+  line-height:1.45;
+}
 
 /* Image band */
 .band{
