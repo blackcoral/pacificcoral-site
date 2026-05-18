@@ -28,50 +28,34 @@ body{
    CLEAN OCEAN DEPTH GRADIENT
    ========================================= */
 
-html,
-body{
+html{
   background:#000;
 }
 
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  background:transparent;
+}
 
 /* Main gradient layer */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-
   background:
-
-    /* Bright ocean glow upper left */
     radial-gradient(
       circle at 16% 12%,
-      rgba(0,180,255,.55) 0%,
-      rgba(0,120,255,.38) 18%,
-      rgba(0,72,170,.28) 34%,
-      rgba(0,24,62,.18) 52%,
-      transparent 72%
-    ),
-
-    /* Mid-water blue transition */
-    radial-gradient(
-      circle at 38% 28%,
-      rgba(0,90,220,.18) 0%,
-      rgba(0,28,82,.14) 38%,
-      transparent 68%
-    ),
-
-    /* Main directional ocean gradient */
-    linear-gradient(
-      135deg,
       #0b6fcf 0%,
-      #084d9c 18%,
-      #05356e 36%,
-      #021a3d 54%,
-      #010914 72%,
+      #064b9b 22%,
+      #03285d 45%,
+      #010b1a 70%,
       #000000 100%
     );
-
-  z-index:-3;
+  z-index:-2;
 }
 
 
@@ -80,26 +64,15 @@ body::after{
   content:"";
   position:fixed;
   inset:0;
-
   background:
-
-    radial-gradient(
-      circle at 10% 8%,
-      rgba(140,240,255,.08) 0%,
-      transparent 36%
-    ),
-
     linear-gradient(
-      145deg,
-      rgba(0,0,0,.02) 0%,
-      rgba(0,0,0,.08) 28%,
-      rgba(0,0,0,.24) 54%,
-      rgba(0,0,0,.52) 78%,
-      rgba(0,0,0,.82) 100%
+      135deg,
+      rgba(0,80,170,.20) 0%,
+      rgba(0,20,60,.18) 35%,
+      rgba(0,0,0,.35) 65%,
+      rgba(0,0,0,.88) 100%
     );
-
-  mix-blend-mode:multiply;
-  z-index:-2;
+  z-index:-1;
 }
 
 .wrap{
